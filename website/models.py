@@ -95,6 +95,18 @@ class Order(db.Model):
     def __str__(self):
         return f'<Order {self.id}>'
 
+class Payment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name_platform = db.Column(db.String(100), nullable=False)
+    number = db.Column(db.String(20), nullable=False)
+    picture = db.Column(db.String(100), nullable=False)
+    date_joined = db.Column(db.DateTime(timezone=True), default=get_jakarta_time)
+    name = db.Column(db.String(30), nullable=False)
+
+
+    def __str__(self):
+        return f'<Order {self.id}>'
+
 
 
 

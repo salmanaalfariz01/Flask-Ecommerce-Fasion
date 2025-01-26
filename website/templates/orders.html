@@ -62,9 +62,15 @@
                             </div>
                             
                         </div>
+
+                        <p class="mb-2 text-muted small">Username: {{ item.customer.username }}</p>
+                        <p class="mb-2 text-muted small">email: {{ item.customer.email }}</p>
+                        <p class="mb-2 text-muted small">phone: {{ item.customer.phone }}</p>
+                        <p class="mb-2 text-muted small">address: {{ item.customer.address }}</p>
                     </div>
                     <hr class="text-muted">
                     {% endfor %}
+                    
                 </div>
             </div>
         </div>
@@ -73,7 +79,26 @@
         <h1 class="text-center mb-5" style="color: white;">You have no Orders</h1>
 
         {% endif %}
-    </div>
+
+        <div class="container mt-5">
+            <h3 class="mb-4" style="color: white;">Available Payment Methods</h3>
+            <div class="row">
+                {% for payment in payments %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: black;">{{ payment.name_platform }}</h5>
+                            <p class="card-title" style="color: black;">{{ payment.name }}</p>
+                            <p class="mb-2 text-muted small"><strong>Number:</strong> {{ payment.number }}</p>
+                            <div class="text-center">
+                                <img src="{{ payment.picture }}" alt="{{ payment.name }}" class="img-fluid img-thumbnail shadow-sm" height="150px" width="150px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
 
 </div>
 

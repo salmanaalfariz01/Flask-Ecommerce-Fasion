@@ -71,3 +71,18 @@ CREATE TABLE `customer` (
   UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- fasion.payment definition
+
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_platform` varchar(100) NOT NULL,
+  `number` varchar(20) NOT NULL,
+  `picture` varchar(100) NOT NULL,
+  `date_joined` datetime DEFAULT current_timestamp(),
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name_platform`),
+  UNIQUE KEY `number` (`number`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, flash, redirect, request, jsonify
-from .models import Product, Cart, Order
+from .models import Product, Cart, Order, Payment
 from flask_login import login_required, current_user
 from . import db
 from datetime import datetime
@@ -237,8 +237,16 @@ def place_order():
 @views.route('/orders')
 @login_required
 def order():
+    # Ambil semua pesanan berdasarkan pengguna yang sedang login
     orders = Order.query.filter_by(customer_link=current_user.id).all()
-    return render_template('orders.html', orders=orders)
+    
+    # Ambil semua metode pembayaran
+    payments = Payment.query.all()  # Ambil data payment dari tabel Payment
+    
+    return render_template('orders.html', orders=orders, payments=payments)
+
+
+
 
 
 @views.route('/search', methods=['GET', 'POST'])
