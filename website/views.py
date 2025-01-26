@@ -2,8 +2,13 @@ from flask import Blueprint, render_template, flash, redirect, request, jsonify
 from .models import Product, Cart, Order
 from flask_login import login_required, current_user
 from . import db
-from intasend import APIService
+from datetime import datetime
+from pytz import timezone
 
+
+def get_jakarta_time():
+    jakarta_timezone = timezone('Asia/Jakarta')
+    return datetime.now(jakarta_timezone)
 
 views = Blueprint('views', __name__)
 
@@ -176,69 +181,56 @@ def remove_cart():
 
 
 
-@views.route('/place-order')
+@views.route('/place-order', methods=['POST'])
 @login_required
 def place_order():
-    try:
-        # Debug log untuk memastikan fungsi dipanggil
-        print(f'User {current_user.id} is attempting to place an order...')
-        
-        customer_cart = Cart.query.filter_by(customer_link=current_user.id).all()
-        if not customer_cart:
-            flash('Your cart is empty')
+    customer_cart = Cart.query.filter_by(customer_link=current_user.id).all()  # Mengambil semua item cart untuk pengguna yang sedang login
+    if customer_cart:
+        try:
+            total = 0
+            for item in customer_cart:
+                total += item.product.current_price * item.quantity
+
+            # Status pembayaran, misalnya 'pending', bisa diubah sesuai logika Anda
+            payment_status = 'Pending'  # Status pesanan, bisa 'Pending', 'Paid', dsb.
+
+            # Proses untuk menyimpan pesanan ke dalam tabel Order
+            for item in customer_cart:
+                new_order = Order()
+                new_order.category = item.product.category  # Kategori produk
+                new_order.gender = item.product.gender      # Gender produk
+                new_order.size = item.product.size          # Ukuran produk
+                new_order.color = item.product.color        # Warna produk
+                new_order.quantity = item.quantity          # Kuantitas produk yang dipesan
+                new_order.price = item.product.current_price  # Harga produk
+                new_order.status = payment_status           # Status pesanan
+
+                # Hubungkan pesanan dengan customer dan produk
+                new_order.customer_link = item.customer_link
+                new_order.product_link = item.product.id  # Link ke produk sesuai dengan id produk
+
+                db.session.add(new_order)
+
+                # Mengurangi stok produk
+                product = Product.query.get(item.product.id)  # Ambil produk berdasarkan ID
+                if product:
+                    product.in_stock -= item.quantity  # Kurangi stok produk sesuai dengan kuantitas yang dipesan
+                    db.session.commit()
+
+                # Menghapus item dari keranjang setelah pemesanan berhasil
+                db.session.delete(item)
+
+            db.session.commit()  # Commit transaksi database
+
+            flash('Order Placed Successfully')
+            return redirect('/orders')  # Arahkan pengguna ke halaman daftar pesanan setelah berhasil
+        except Exception as e:
+            db.session.rollback()  # Jika terjadi kesalahan, rollback transaksi
+            print(e)
+            flash('Order not placed')
             return redirect('/')
-        
-        # Debug log untuk jumlah item di keranjang
-        print(f'Cart items: {len(customer_cart)}')
-        
-        total = 0
-        for item in customer_cart:
-            total += item.product.current_price * item.quantity
-
-        # Debug total amount
-        print(f'Total amount: {total}')
-        
-        service = APIService(token=API_TOKEN, publishable_key=API_PUBLISHABLE_KEY, test=True)
-        create_order_response = service.collect.mpesa_stk_push(
-            phone_number='081317694338',
-            email=current_user.email,
-            amount=total + 14000,
-            narrative='Purchase'
-        )
-        
-        # Debug response dari APIService
-        print(f'Payment response: {create_order_response}')
-        
-        for item in customer_cart:
-            new_order = Order(
-                category=item.category,
-                gender=item.gender,
-                size=item.size,
-                color=item.color,
-                quantity=item.quantity,
-                price=item.product.current_price,
-                status=create_order_response['invoice']['state'].capitalize(),
-                payment_id=create_order_response['id'],
-                product_link=item.product_link,
-                customer_link=item.customer_link
-            )
-            db.session.add(new_order)
-
-            # Update stok produk
-            product = Product.query.get(item.product_link)
-            if product:
-                product.in_stock -= item.quantity
-
-            # Hapus item dari keranjang
-            db.session.delete(item)
-
-        db.session.commit()
-        flash('Order Placed Successfully')
-        return redirect('/orders')
-    except Exception as e:
-        db.session.rollback()
-        print(f'Error placing order: {e}')
-        flash('Order not placed. Please try again.')
+    else:
+        flash('Your cart is Empty')
         return redirect('/')
 
 

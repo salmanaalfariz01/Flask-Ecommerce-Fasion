@@ -20,6 +20,7 @@ class Customer(db.Model, UserMixin):
     cart_items = db.relationship('Cart', backref=db.backref('customer', lazy=True))
     orders = db.relationship('Order', backref=db.backref('customer', lazy=True))
 
+
     @property
     def password(self):
         raise AttributeError('Password is not a readable Attribute')
@@ -82,16 +83,17 @@ class Order(db.Model):
     color = db.Column(db.String(20), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.String(100), nullable=False)
-    payment_id = db.Column(db.String(1000), nullable=False)
+    status = db.Column(db.Enum('Pending', 'Paid', 'Shipped', 'Delivered', 'Cancelled', name='status_enum'), nullable=False)
+    order_date = db.Column(db.DateTime(timezone=True), default=get_jakarta_time)
 
     customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     product_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
 
-    # customer
 
     def __str__(self):
-        return '<Order %r>' % self.id
+        return f'<Order {self.id}>'
+
+
 
 
 

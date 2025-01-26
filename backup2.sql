@@ -1,25 +1,22 @@
 -- fasion.`order` definition
 CREATE TABLE `order` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category` varchar(20) NOT NULL,
-  `gender` enum('men','women','child') NOT NULL,
-  `size` enum('S','M','L','XL') NOT NULL,
-  `color` varchar(20) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` INT NOT NULL,
-  `status` ENUM('Processing', 'Completed', 'Failed') DEFAULT 'Processing' NOT NULL,
-  `payment_id` INT NOT NULL,
-  `customer_link` int(11) NOT NULL,
-  `product_link` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `customer_link` (`customer_link`),
-  KEY `payment_id` (`payment_id`),
-  KEY `product_link` (`product_link`),
-  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customer_link`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `order_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `order_ibfk_3` FOREIGN KEY (`product_link`) REFERENCES `product` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(20) NOT NULL,
+    gender ENUM('men', 'women', 'child') NOT NULL,
+    size ENUM('S', 'M', 'L', 'XL', 'XXL') NOT NULL,
+    color VARCHAR(20) NOT NULL,
+    quantity INT NOT NULL,
+    price INT NOT NULL,
+    status ENUM('Pending', 'Paid', 'Shipped', 'Delivered', 'Cancelled') NOT NULL,
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Tanggal pesanan (gunakan default untuk waktu saat ini)
 
+    customer_link INT NOT NULL,
+    product_link INT NOT NULL,
+
+    -- Menambahkan Foreign Keys
+    FOREIGN KEY (customer_link) REFERENCES customer(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_link) REFERENCES product(id) ON DELETE CASCADE
+);
 
 
 
