@@ -7,7 +7,9 @@ CREATE TABLE `order` (
     color VARCHAR(20) NOT NULL,
     quantity INT NOT NULL,
     price INT NOT NULL,
-    status ENUM('Pending', 'Paid', 'Shipped', 'Delivered', 'Cancelled') NOT NULL,
+    status ENUM('Pending', 'Paid', 'Delivered', 'Accept') NOT NULL,
+    shipping_cost INT NOT NULL,               # Total jumlah produk
+    grand_total INT NOT NULL,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Tanggal pesanan (gunakan default untuk waktu saat ini)
 
     customer_link INT NOT NULL,
@@ -73,16 +75,14 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 
--- fasion.payment definition
-
 CREATE TABLE `payment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name_platform` varchar(100) NOT NULL,
-  `number` varchar(20) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `payment_method` varchar(100) NOT NULL,
+  `payment_number` varchar(20) NOT NULL,
   `picture` varchar(100) NOT NULL,
   `date_joined` datetime DEFAULT current_timestamp(),
-  `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name_platform`),
-  UNIQUE KEY `number` (`number`)
+  UNIQUE KEY `name` (`payment_method`),
+  UNIQUE KEY `number` (`payment_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;

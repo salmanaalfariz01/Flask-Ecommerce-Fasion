@@ -85,7 +85,9 @@ class Order(db.Model):
     color = db.Column(db.String(20), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.Enum('Pending', 'Paid', 'Shipped', 'Delivered', 'Cancelled', name='status_enum'), nullable=False)
+    status = db.Column(db.Enum('Pending', 'Paid', 'Delivered', 'Accept', name='status_enum'), nullable=False)
+    shipping_cost = db.Column(db.Integer, nullable=False)
+    grand_total = db.Column(db.Integer, nullable=False)
     order_date = db.Column(db.DateTime(timezone=True), default=get_jakarta_time)
 
     customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
@@ -97,12 +99,11 @@ class Order(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name_platform = db.Column(db.String(100), nullable=False)
-    number = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(30), nullable=False)
+    payment_method = db.Column(db.String(100), nullable=False)
+    payment_number = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(100), nullable=False)
     date_joined = db.Column(db.DateTime(timezone=True), default=get_jakarta_time)
-    name = db.Column(db.String(30), nullable=False)
-
 
     def __str__(self):
         return f'<Order {self.id}>'
