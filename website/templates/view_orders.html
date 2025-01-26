@@ -16,6 +16,10 @@
             <th scope="col">Customer Email</th>
 
             <th scope="col">Product Name</th>
+            <th scope="col">category</th>
+            <th scope="col">gender</th>
+            <th scope="col">size</th>
+            <th scope="col">color</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
 
@@ -37,7 +41,12 @@
 
             <td>{{ order.customer.username }}</td>
             <td>{{ order.customer.email }}</td>
+
             <td>{{ order.product.product_name }}</td>
+            <td>{{ order.product.category }}</td>
+            <td>{{ order.product.gender }}</td>
+            <td>{{ order.product.size }}</td>
+            <td>{{ order.product.color }}</td>
             <td>{{ order.price }}</td>
             <td>{{ order.quantity }}</td>
 

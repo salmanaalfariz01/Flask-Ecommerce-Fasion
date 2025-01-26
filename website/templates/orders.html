@@ -23,8 +23,13 @@
                         <div class="col-sm-7">
                             
                             <h3>{{ item.product.product_name }}</h3>
+                            <p class="mb-2 text-muted small">Category: {{ item.category }}</p>
+                            <p class="mb-2 text-muted small">Gender: {{ item.gender }}</p>
+                            <p class="mb-2 text-muted small">Size: {{ item.size }}</p>
+                            <p class="mb-2 text-muted small">Color: {{ item.color }}</p>
                             <p class="mb-2 text-muted small">Quantity: {{ item.quantity }}</p>
-                            <p class="mb-2 text-muted small">Price: Ksh {{ item.price }}</p>
+                            <p class="mb-2 text-muted small">Price: Rp {{ "{:,.0f}".format(item.price) }}</p>
+
                                
                                 
                             <div class="col-sm-4">

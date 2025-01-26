@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <title>Amazon | {% block title %} {% endblock %}</title>
+    <title>Syzea | {% block title %} {% endblock %}</title>
 </head>
 <body style="background-color: rgb(124, 14, 151);">
 
@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/" style="font-family: cursive; font-size: 19px;">Amazon</a>
+              <a class="nav-link active" aria-current="page" href="/" style="font-family: cursive; font-size: 19px;">Syzea</a>
             </li>
 
             <li class="nav-item">
@@ -109,10 +109,9 @@
 
     {% for message in get_flashed_messages() %}
 
-    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 5px;">
-        <strong>{{ message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 5px;" id="alertMessage">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endfor %}
 
@@ -123,7 +122,7 @@
 
 
     <footer class="container-fluid  text-center p-2 mt-5" style="background-color: orange; color: white;">
-      <a href="https://github.com/Frost-Codes" style="color: white;">Amazon</a> | <span>
+      <a href="https://github.com/salmanaalfariz01" style="color: white;">Syzea</a> | <span>
         <i class="fa-sharp fa-regular fa-copyright"></i></span> 2023 All rights reserved
 
     </footer>
@@ -131,20 +130,15 @@
     <script src="{{ url_for( 'static', filename='js/owl.carousel.min.js') }}"></script>
     <script src="{{ url_for( 'static', filename='js/all.min.js') }}"></script>
     <script src="{{ url_for( 'static', filename='js/jquery.js') }}"></script>
-
     <script src="{{ url_for( 'static', filename='js/myScript.js') }}"></script>
-
-
-
-</body>
+    <script>
+      // Hapus semua alert setelah 2 detik
+      setTimeout(() => {
+          document.querySelectorAll('.alert').forEach(alertElement => {
+              alertElement.classList.remove('show'); // Hilangkan kelas `show` untuk memulai animasi fade-out
+              alertElement.addEventListener('transitionend', () => alertElement.remove()); // Hapus elemen setelah animasi selesai
+          });
+      }, 2000);
+    </script>
     
-
-
-
-
-
-
-    
-    
-</body>
 </html>

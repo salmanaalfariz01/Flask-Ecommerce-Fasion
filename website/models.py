@@ -13,9 +13,9 @@ def get_jakarta_time():
 class Customer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
-    username = db.Column(db.String(100))
+    username = db.Column(db.String(100), unique=True)
     password_hash = db.Column(db.String(150))
-    date_joined = db.Column(db.DateTime(), default=datetime.utcnow)
+    date_joined = db.Column(db.DateTime(timezone=True), default=get_jakarta_time)
 
     cart_items = db.relationship('Cart', backref=db.backref('customer', lazy=True))
     orders = db.relationship('Order', backref=db.backref('customer', lazy=True))
@@ -54,11 +54,15 @@ class Product(db.Model):
 
     def __str__(self):
         return f'<Product {self.product_name}>'
-
+    
 
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.String(20), nullable=False)
+    gender = db.Column(db.Enum('men', 'women', 'child', name='gender_enum'), nullable=False)
+    size = db.Column(db.Enum('S', 'M', 'L', 'XL', 'XXL', name='size_enum'), nullable=False)
+    color = db.Column(db.String(20), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
     customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
@@ -72,6 +76,10 @@ class Cart(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.String(20), nullable=False)
+    gender = db.Column(db.Enum('men', 'women', 'child', name='gender_enum'), nullable=False)
+    size = db.Column(db.Enum('S', 'M', 'L', 'XL', 'XXL', name='size_enum'), nullable=False)
+    color = db.Column(db.String(20), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(100), nullable=False)

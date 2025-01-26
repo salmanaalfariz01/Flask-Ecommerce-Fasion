@@ -55,7 +55,7 @@ def add_shop_items():
             try:
                 db.session.add(new_shop_item)
                 db.session.commit()
-                flash(f'{product_name} added Successfully')
+                flash(f'{product_name} Size: {size} Color: {color} added Successfully')
                 print('Product Added')
                 return render_template('add_shop_items.html', form=form)
             except Exception as e:
