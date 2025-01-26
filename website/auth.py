@@ -13,15 +13,19 @@ def sign_up():
     form = SignUpForm()
     if form.validate_on_submit():
         email = form.email.data
+        phone = form.phone.data
         username = form.username.data
         password1 = form.password1.data
         password2 = form.password2.data
+        address = form.address.data
 
         if password1 == password2:
             new_customer = Customer()
             new_customer.email = email
+            new_customer.phone = phone
             new_customer.username = username
             new_customer.password = password2
+            new_customer.address = address
 
             try:
                 db.session.add(new_customer)
@@ -34,8 +38,10 @@ def sign_up():
 
             form.email.data = ''
             form.username.data = ''
+            form.phone.data = ''
             form.password1.data = ''
             form.password2.data = ''
+            form.address.data = ''
 
     return render_template('signup.html', form=form)
 

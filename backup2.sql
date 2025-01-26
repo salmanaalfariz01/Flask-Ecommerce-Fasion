@@ -19,17 +19,6 @@ CREATE TABLE `order` (
 );
 
 
-
-CREATE TABLE payment (
-  id INT PRIMARY KEY,
-  customer_link INT NOT NULL,
-  total_amount INT NOT NULL,
-  payment_status ENUM('Pending', 'Paid', 'Failed') DEFAULT 'Pending' NOT NULL, -- Pending, Paid, Failed
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (customer_link) REFERENCES Customer(id)
-);
-
 -- fasion.cart definition
 
 CREATE TABLE `cart` (
@@ -71,10 +60,14 @@ CREATE TABLE `product` (
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password_hash` varchar(150) DEFAULT NULL,
+  `phone` varchar(20) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password_hash` text NOT NULL,
+  `address` TEXT NOT NULL,
   `date_joined` datetime DEFAULT current_timestamp(),
+  
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;

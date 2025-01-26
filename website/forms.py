@@ -1,14 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, FloatField, PasswordField, EmailField, BooleanField, SubmitField, SelectField
+from wtforms import StringField, IntegerField, IntegerField, PasswordField, EmailField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, length, NumberRange
 from flask_wtf.file import FileField, FileRequired
 
 
 class SignUpForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired()])
-    username = StringField('Username', validators=[DataRequired(), length(min=2)])
+    username = StringField('Username', validators=[DataRequired(), length(min=4)])
+    phone = StringField('Phone', validators=[DataRequired(), length(min=10)])
     password1 = PasswordField('Enter Your Password', validators=[DataRequired(), length(min=6)])
     password2 = PasswordField('Confirm Your Password', validators=[DataRequired(), length(min=6)])
+    address = StringField('Address', validators=[DataRequired(), length(min=4)])
     submit = SubmitField('Sign Up')
 
 
@@ -27,8 +29,8 @@ class PasswordChangeForm(FlaskForm):
 
 class ShopItemsForm(FlaskForm):
     product_name = StringField('Name of Product', validators=[DataRequired()])
-    current_price = FloatField('Current Price', validators=[DataRequired()])
-    previous_price = FloatField('Previous Price', validators=[DataRequired()])
+    current_price = IntegerField('Current Price', validators=[DataRequired()])
+    previous_price = IntegerField('Previous Price', validators=[DataRequired()])
     size = StringField('Size', validators=[DataRequired()])
     category = StringField('Category', validators=[DataRequired()])
     gender = StringField('Gender', validators=[DataRequired()])
@@ -42,8 +44,8 @@ class ShopItemsForm(FlaskForm):
     
 class UpdateItemsForm(FlaskForm):
     product_name = StringField('Name of Product', validators=[DataRequired()])
-    current_price = FloatField('Current Price', validators=[DataRequired()])
-    previous_price = FloatField('Previous Price', validators=[DataRequired()])
+    current_price = IntegerField('Current Price', validators=[DataRequired()])
+    previous_price = IntegerField('Previous Price', validators=[DataRequired()])
     size = StringField('Size', validators=[DataRequired()])
     category = StringField('Category', validators=[DataRequired()])
     gender = StringField('Gender', validators=[DataRequired()])
