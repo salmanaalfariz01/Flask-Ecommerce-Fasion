@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} Order History {% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="text-center mb-5" style="color: white;">Order History</h1>
+    
+    <div class="row">
+        {% if histories %}
+            {% for history in histories %}
+            <div class="col-md-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: black;"><strong>Product Name:</strong> {{ history.product_name }}</h5>
+                        <p class="mb-2 text-muted small"><strong>Category:</strong> {{ history.category }}</p>
+                        <p class="mb-2 text-muted small"><strong>Gender:</strong> {{ history.gender }}</p>
+                        <p class="mb-2 text-muted small"><strong>Size:</strong> {{ history.size }}</p>
+                        <p class="mb-2 text-muted small"><strong>Color:</strong> {{ history.color }}</p>
+                        <p class="mb-2 text-muted small"><strong>Quantity:</strong> {{ history.quantity }}</p>
+                        <p class="mb-2 text-muted small"><strong>Price:</strong> Rp {{ "{:,.0f}".format(history.price) }}</p>
+                        <p class="mb-2 text-muted small"><strong>Shipping Cost:</strong> Rp {{ "{:,.0f}".format(history.shipping_cost) }}</p>
+                        <p class="mb-2 text-muted small"><strong>Total:</strong> Rp {{ "{:,.0f}".format(history.grand_total) }}</p>
+                        <p class="mb-2 text-muted small"><strong>Status:</strong> {{ history.status }}</p>
+                        <p class="mb-2 text-muted small"><strong>Completed On:</strong> {{ history.date_completed.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h3 class="text-center" style="color: white;">No order history found.</h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

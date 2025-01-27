@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, request, jsonify, url_for, send_file
 from flask_login import login_required, current_user
-from .models import Product, Cart, Order, Payment
+from .models import Product, Cart, Order, Payment, History, OrderUser
 from . import db
 from datetime import datetime
 from pytz import timezone
@@ -39,7 +39,7 @@ def home():
 
     items = Product.query.filter_by(flash_sale=True)
 
-    return render_template('home.html', items=items, cart=Cart.query.filter_by(customer_link=current_user.id).all()
+    return render_template('home.html', items=items, cart=Cart.query.filter_by(customer_id=current_user.id).all()
                            if current_user.is_authenticated else [])
 
 
@@ -47,6 +47,7 @@ def home():
 @login_required
 def add_to_cart(item_id):
     # Ambil data dari query string
+    product_name = request.args.get('product_name')
     category = request.args.get('category')
     gender = request.args.get('gender')
     size = request.args.get('size')
@@ -60,8 +61,9 @@ def add_to_cart(item_id):
 
     # Periksa apakah item sudah ada di keranjang dengan parameter tambahan
     item_exists = Cart.query.filter_by(
-        product_link=item_id,
-        customer_link=current_user.id,
+        product_id=item_id,
+        customer_id=current_user.id,
+        product_name=product_name,
         category=category,
         gender=gender,
         size=size,
@@ -81,13 +83,14 @@ def add_to_cart(item_id):
     else:
         # Jika belum ada, tambahkan item baru ke keranjang
         new_cart_item = Cart(
+            product_name=product_name,
             category=category,
             gender=gender,
             size=size,
             color=color,
             quantity=1,
-            customer_link=current_user.id,
-            product_link=item_id
+            customer_id=current_user.id,
+            product_id=item_id
         )
         try:
             db.session.add(new_cart_item)
@@ -107,7 +110,7 @@ def add_to_cart(item_id):
 @views.route('/cart')
 @login_required
 def show_cart():
-    cart = Cart.query.filter_by(customer_link=current_user.id).all()
+    cart = Cart.query.filter_by(customer_id=current_user.id).all()
     amount = 0
     for item in cart:
         amount += item.product.current_price * item.quantity
@@ -124,7 +127,7 @@ def plus_cart():
         cart_item.quantity = cart_item.quantity + 1
         db.session.commit()
 
-        cart = Cart.query.filter_by(customer_link=current_user.id).all()
+        cart = Cart.query.filter_by(customer_id=current_user.id).all()
 
         amount = 0
 
@@ -153,7 +156,7 @@ def minus_cart():
             db.session.commit()
 
         # Get the updated cart and calculate the total amount
-        cart = Cart.query.filter_by(customer_link=current_user.id).all()
+        cart = Cart.query.filter_by(customer_id=current_user.id).all()
         amount = 0
 
         for item in cart:
@@ -179,7 +182,7 @@ def remove_cart():
         db.session.delete(cart_item)
         db.session.commit()
 
-        cart = Cart.query.filter_by(customer_link=current_user.id).all()
+        cart = Cart.query.filter_by(customer_id=current_user.id).all()
 
         amount = 0
 
@@ -194,12 +197,10 @@ def remove_cart():
 
         return jsonify(data)
 
-
-
 @views.route('/place-order', methods=['POST'])
 @login_required
 def place_order():
-    customer_cart = Cart.query.filter_by(customer_link=current_user.id).all()  # Mengambil semua item cart untuk pengguna yang sedang login
+    customer_cart = Cart.query.filter_by(customer_id=current_user.id).all()  # Mengambil semua item cart untuk pengguna yang sedang login
     if customer_cart:
         try:
             total = 0  # Variabel untuk menghitung total harga pesanan
@@ -222,6 +223,7 @@ def place_order():
             # Proses untuk menyimpan pesanan ke dalam tabel Order
             for item in customer_cart:
                 new_order = Order()
+                new_order.product_name = item.product.product_name
                 new_order.category = item.product.category  # Kategori produk
                 new_order.gender = item.product.gender      # Gender produk
                 new_order.size = item.product.size          # Ukuran produk
@@ -233,10 +235,30 @@ def place_order():
                 new_order.grand_total = grand_total         # Total keseluruhan (harga + pengiriman)
 
                 # Hubungkan pesanan dengan customer dan produk
-                new_order.customer_link = item.customer_link
-                new_order.product_link = item.product.id  # Link ke produk sesuai dengan id produk
+                new_order.customer_id = item.customer_id
+                new_order.product_id = item.product.id  # Link ke produk sesuai dengan id produk
 
                 db.session.add(new_order)
+                db.session.commit()  # Commit di sini untuk mendapatkan new_order.id yang baru saja dimasukkan
+
+                # Simpan data pengguna ke tabel order_user, dengan data yang sama dari Order
+                new_order_user = OrderUser(
+                    id=new_order.id,  # Gunakan Order.id sebagai primary key untuk OrderUser
+                    product_name = item.product.product_name,
+                    category=item.product.category,
+                    gender=item.product.gender,
+                    size=item.product.size,
+                    color=item.product.color,
+                    quantity=item.quantity,
+                    price=item.product.current_price,
+                    status=payment_status,
+                    shipping_cost=shipping_cost,
+                    grand_total=grand_total,
+                    customer_id=item.customer_id,
+                    product_id=item.product.id
+                )
+
+                db.session.add(new_order_user)
 
                 # Mengurangi stok produk
                 product = Product.query.get(item.product.id)  # Ambil produk berdasarkan ID
@@ -262,76 +284,103 @@ def place_order():
 
 
 
+
+
 @views.route('/cancel-order/<int:order_id>', methods=['POST'])
 @login_required
 def cancel_order(order_id):
     try:
         # Ambil pesanan berdasarkan ID dan pastikan pesanan milik pengguna yang sedang login
-        order = Order.query.filter_by(id=order_id, customer_link=current_user.id).first()
+        order = Order.query.filter_by(id=order_id, customer_id=current_user.id).first()
 
-        if order:
-            # Kembalikan kuantitas produk ke stok
-            product = Product.query.get(order.product_link)
-            if product:
-                product.in_stock += order.quantity  # Tambahkan kembali jumlah produk yang dipesan ke stok
-
-            # Hapus pesanan dari database
-            db.session.delete(order)
-            db.session.commit()  # Commit transaksi ke database
-
-            flash('Order has been canceled successfully.')
-            return redirect('/orders')  # Redirect ke halaman daftar pesanan setelah pembatalan
-        else:
+        if not order:
             flash('Order not found or you are not authorized to cancel this order.')
             return redirect('/orders')
+
+        # Kembalikan kuantitas produk ke stok
+        product = Product.query.get(order.product_id)
+        if product:
+            product.in_stock += order.quantity  # Tambahkan kembali jumlah produk yang dipesan ke stok
+
+        # Hapus data terkait dari tabel order_user
+        order_user = OrderUser.query.get(order.id)  # Menggunakan order.id karena sama dengan order_user.id
+        if order_user:
+            db.session.delete(order_user)
+
+        # Hapus pesanan dari database
+        db.session.delete(order)
+
+        # Commit transaksi ke database
+        db.session.commit()
+
+        flash('Order has been canceled successfully.')
+        return redirect('/orders')
+
     except Exception as e:
         db.session.rollback()  # Rollback jika ada kesalahan
-        print(e)
+        print(f"Error: {e}")
         flash('Failed to cancel the order.')
         return redirect('/orders')
+
+
 
 
 @views.route('/orders')
 @login_required
 def order():
-    # Ambil semua pesanan berdasarkan pengguna yang sedang login
-    orders = Order.query.filter_by(customer_link=current_user.id).all()
-    
+    # Cek apakah pengguna adalah admin
+    is_admin = current_user.id == 1
+
+    # Admin dapat melihat semua pesanan, pengguna biasa hanya melihat pesanan mereka sendiri
+    if is_admin:
+        orders = Order.query.all()
+    else:
+        orders = Order.query.filter_by(customer_id=current_user.id).all()
+
     # Menggunakan query SQL mentah untuk mendapatkan semua metode pembayaran
     sql_payments = text("""
         SELECT name, payment_method, payment_number, picture
         FROM payment
     """)
     payments = db.session.execute(sql_payments).fetchall()
-    
-    # Hitung amount dan total untuk setiap order
+
+    # Hitung jumlah dan total untuk setiap order
     for item in orders:
         item.amount = item.quantity  # Jumlah produk yang dipesan
         item.total = item.price * item.quantity  # Total harga pesanan
-    
-    return render_template('orders.html', orders=orders, payments=payments)
+
+    return render_template('orders.html', orders=orders, payments=payments, is_admin=is_admin)
 
 @views.route('/upload-payment/<int:order_id>', methods=['POST'])
 @login_required
 def upload_payment(order_id):
+    # Ambil data order berdasarkan order_id
     order = Order.query.get(order_id)
     
-    if order and order.customer_link == current_user.id:
+    # Pastikan order ada dan pemiliknya adalah customer yang sedang login
+    if order and order.customer_id == current_user.id:
+        # Periksa apakah ada file yang diunggah
         if 'payment_file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         
         file = request.files['payment_file']
         
+        # Pastikan file yang diunggah valid
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
             
-            # Update status pesanan menjadi "Paid"
+            # Update status pesanan menjadi "Paid" di tabel Order
             order.status = 'Paid'
-            db.session.commit()
             
+            # Update status pesanan menjadi "Paid" di tabel OrderUser
+            order_user = OrderUser.query.get(order.id)  # Mengambil OrderUser berdasarkan order.id
+            if order_user:
+                order_user.status = 'Paid'
+                db.session.commit()
+
             flash('Payment uploaded successfully and order marked as Paid!')
             return redirect(url_for('views.order'))
         else:
@@ -341,9 +390,10 @@ def upload_payment(order_id):
     flash('Order not found or unauthorized access.')
     return redirect(url_for('views.order'))
 
-import cv2
-import numpy as np
-import io
+
+
+
+
 
 def wrap_text(text, font, font_scale, max_width, thickness):
     """
@@ -376,7 +426,7 @@ def generate_invoice_png(order_id):
             return None
 
         # Dimensi gambar (ukuran kertas diperbesar)
-        width, height = 750, 800
+        width, height = 900, 900
         img = np.ones((height, width, 3), dtype=np.uint8) * 255
 
         # Font dan pengaturan teks (gunakan font tebal)
@@ -393,6 +443,9 @@ def generate_invoice_png(order_id):
         cv2.putText(img, f"Invoice for Order ID: {order.id}", (margin_left, y_offset), font, font_scale, color, bold_thickness)
 
         # Informasi pesanan
+        y_offset += line_height
+        cv2.putText(img, f"Name: {order.product_name}", (margin_left, y_offset), font, font_scale, color, bold_thickness)
+        
         y_offset += line_height
         cv2.putText(img, f"Category: {order.category}", (margin_left, y_offset), font, font_scale, color, bold_thickness)
 
@@ -453,9 +506,6 @@ def generate_invoice_png(order_id):
 
 
 
-
-
-# Route untuk menandai order sebagai paid
 @views.route('/mark-as-paid/<int:order_id>', methods=['POST'])
 @login_required
 def mark_as_paid(order_id):
@@ -464,9 +514,42 @@ def mark_as_paid(order_id):
         order.status = 'Paid'
         db.session.commit()
 
+        # Update status di order_user menjadi "Paid"
+        order_user = OrderUser.query.filter_by(order_id=order.id, customer_id=current_user.id).first()
+        if order_user:
+            order_user.status = 'Paid'
+            db.session.commit()
+
         flash("Order marked as paid and invoice is ready!")
         return redirect(f'/download-invoice/{order.id}')
     flash("Order not found!")
+    return redirect('/orders')
+
+@views.route('/mark-as-delivery/<int:order_id>', methods=['POST'])
+@login_required
+def mark_as_delivery(order_id):
+    # Hanya admin yang dapat menandai pesanan sebagai "On Delivery"
+    if current_user.id != 1:
+        flash("You are not authorized to perform this action.")
+        return redirect('/orders')
+
+    # Ambil pesanan berdasarkan ID
+    order = Order.query.get(order_id)
+    if order:
+        # Update status pesanan menjadi "On Delivery" di tabel Order
+        order.status = "On Delivery"
+        db.session.commit()
+
+        # Update status pesanan menjadi "On Delivery" di tabel OrderUser
+        order_user = OrderUser.query.get(order.id)  # Ambil data OrderUser berdasarkan order.id yang sama
+        if order_user:
+            order_user.status = 'On Delivery'
+            db.session.commit()
+
+        flash(f"Order {order.id} marked as On Delivery.")
+    else:
+        flash("Order not found.")
+
     return redirect('/orders')
 
 
@@ -484,8 +567,64 @@ def download_invoice(order_id):
         flash("Invoice not found!")
         return redirect('/orders')
 
+@views.route('/order-arrived/<int:order_user_id>', methods=['POST'])
+@login_required
+def order_arrived(order_user_id):
+    # Ambil data OrderUser berdasarkan order_user_id
+    order_user = OrderUser.query.get(order_user_id)
+
+    if not order_user:
+        flash("Order not found.", "error")
+        return redirect(url_for('views.order'))  # Gantilah ini jika perlu
+
+    # Pastikan hanya user yang membuat pesanan ini yang dapat mengonfirmasi
+    if order_user.customer_id != current_user.id:
+        flash("You are not authorized to confirm this order.", "error")
+        return redirect(url_for('views.order'))  # Gantilah ini jika perlu
+
+    # Simpan data dari order_user ke history
+    history = History(
+        order_user_id=order_user.id,  # Gunakan order_user.id yang sesuai
+        customer_id=order_user.customer_id,
+        product_id=order_user.product_id,
+        product_name=order_user.product_name,
+        category=order_user.category,
+        gender=order_user.gender,
+        size=order_user.size,
+        color=order_user.color,
+        quantity=order_user.quantity,
+        price=order_user.price,
+        shipping_cost=order_user.shipping_cost,
+        grand_total=order_user.grand_total,
+        status="Completed"
+    )
+    db.session.add(history)
+
+    # Hapus pesanan dari tabel Order
+    order = Order.query.get(order_user.id)  # Ambil pesanan dari tabel Order menggunakan ID yang sama
+    if order:
+        db.session.delete(order)
+
+    db.session.commit()
+
+    flash("Order marked as completed and moved to history.", "success")
+    return redirect(url_for('views.history'))  # Pastikan ke halaman yang benar
 
 
+
+
+
+
+@views.route('/history')
+@login_required
+def history():
+    # Admin melihat semua riwayat, user melihat riwayat mereka sendiri
+    if current_user.id == 1:  # Admin
+        histories = History.query.all()
+    else:
+        histories = History.query.filter_by(customer_id=current_user.id).all()
+
+    return render_template('history.html', histories=histories)
 
 
 
@@ -494,7 +633,7 @@ def search():
     if request.method == 'POST':
         search_query = request.form.get('search')
         items = Product.query.filter(Product.product_name.ilike(f'%{search_query}%')).all()
-        return render_template('search.html', items=items, cart=Cart.query.filter_by(customer_link=current_user.id).all()
+        return render_template('search.html', items=items, cart=Cart.query.filter_by(customer_id=current_user.id).all()
                            if current_user.is_authenticated else [])
 
     return render_template('search.html')

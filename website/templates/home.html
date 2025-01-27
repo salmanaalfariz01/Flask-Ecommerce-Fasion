@@ -127,12 +127,9 @@
         <div class="col" style="background-color: white;">
             <img src="{{ item.product_picture }}" alt="" style="height: 202px; width: 180px; border-radius: 10px;">
         
-            <div class="row" style="margin-top: 5px;">
-                <h6 style="color: gray;">{{ item.product_name }}</h6>
-            </div>
-        
             <!-- Added Category, Gender, Size, and Color -->
             <div class="row" style="margin-top: 10px;">
+                <p><strong>Name:</strong> {{ item.product_name }}</p>
                 <p><strong>Category:</strong> {{ item.category }}</p>
                 <p><strong>Gender:</strong> {{ item.gender }}</p>
                 <p><strong>Size:</strong> {{ item.size }}</p>
@@ -151,7 +148,7 @@
                 </div>
         
                 <div class="col">
-                    <a href="/add-to-cart/{{ item.id }}?category={{ item.category }}&gender={{ item.gender }}&size={{ item.size }}&color={{ item.color }}">
+                    <a href="/add-to-cart/{{ item.id }}?product_name={{ item.product_name }}&category={{ item.category }}&gender={{ item.gender }}&size={{ item.size }}&color={{ item.color }}">
                         Add
                     </a>
                 </div>                

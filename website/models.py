@@ -62,14 +62,15 @@ class Product(db.Model):
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     gender = db.Column(db.Enum('men', 'women', 'child', name='gender_enum'), nullable=False)
     size = db.Column(db.Enum('S', 'M', 'L', 'XL', 'XXL', name='size_enum'), nullable=False)
     color = db.Column(db.String(20), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
-    customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
-    product_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
 
     # customer product
 
@@ -79,23 +80,49 @@ class Cart(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     gender = db.Column(db.Enum('men', 'women', 'child', name='gender_enum'), nullable=False)
     size = db.Column(db.Enum('S', 'M', 'L', 'XL', 'XXL', name='size_enum'), nullable=False)
     color = db.Column(db.String(20), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.Enum('Pending', 'Paid', 'Delivered', 'Accept', name='status_enum'), nullable=False)
+    status = db.Column(db.Enum('Pending', 'Paid', 'On Delivery', 'The order has arrived', name='status_enum'), nullable=False)
     shipping_cost = db.Column(db.Integer, nullable=False)
     grand_total = db.Column(db.Integer, nullable=False)
     order_date = db.Column(db.DateTime(timezone=True), default=get_jakarta_time)
 
-    customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
-    product_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    
 
 
     def __str__(self):
         return f'<Order {self.id}>'
+
+
+class OrderUser(db.Model):
+    id = db.Column(db.Integer, db.ForeignKey('order.id'), primary_key=True, nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    category = db.Column(db.String(20), nullable=False)
+    gender = db.Column(db.Enum('men', 'women', 'child', name='gender_enum'), nullable=False)
+    size = db.Column(db.Enum('S', 'M', 'L', 'XL', 'XXL', name='size_enum'), nullable=False)
+    color = db.Column(db.String(20), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.Enum('Pending', 'Paid', 'On Delivery', 'The order has arrived', name='status_enum'), nullable=False)
+    shipping_cost = db.Column(db.Integer, nullable=False)
+    grand_total = db.Column(db.Integer, nullable=False)
+    order_date = db.Column(db.DateTime(timezone=True), default=get_jakarta_time)
+
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+
+
+
+    def __str__(self):
+        return f'<Order {self.id}>'
+
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -107,6 +134,30 @@ class Payment(db.Model):
 
     def __str__(self):
         return f'<Order {self.id}>'
+    
+
+class History(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_user_id = db.Column(db.Integer, db.ForeignKey('order_user.id'), nullable=False)  # ID Order asli
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)  # Nama produk
+    category = db.Column(db.String(50), nullable=False)  # Kategori produk
+    gender = db.Column(db.String(10), nullable=True)  # Gender produk
+    size = db.Column(db.String(10), nullable=True)  # Ukuran
+    color = db.Column(db.String(20), nullable=True)  # Warna
+    quantity = db.Column(db.Integer, nullable=False)  # Jumlah
+    price = db.Column(db.Float, nullable=False)  # Harga per produk
+    shipping_cost = db.Column(db.Float, nullable=False)  # Biaya pengiriman
+    grand_total = db.Column(db.Float, nullable=False)  # Total harga
+    status = db.Column(db.String(50), nullable=False)  # Status pesanan
+    date_completed = db.Column(db.DateTime(timezone=True), default=datetime.now)
+
+    # Relasi
+    customer = db.relationship('Customer', backref='histories')
+    product = db.relationship('Product', backref='histories')
+
+
 
 
 

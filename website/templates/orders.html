@@ -43,12 +43,12 @@
                                     <div class="progress-bar bg-info" role="progressbar" style="width: 40%;"  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
 
-                                {% elif item.status == 'Delivery' %}
+                                {% elif item.status == 'On Delivery' %}
                                 <div class="progress">
                                     <div class="progress-bar bg-warning" role="progressbar" style="width: 70%;"  aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
 
-                                {% elif item.status == 'Accept' %}
+                                {% elif item.status == 'The order has arrived' %}
                                 <div class="progress">
                                     <div class="progress-bar bg-success" role="progressbar" style="width: 100%;"  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -76,11 +76,28 @@
                             </div>
 
                             <div class="col-sm-12">
-                                <p>Status: {{ item.status }}</p>
+                                <p>Download Invoice</p>
                                 {% if item.status == 'Paid' %}
-                                    <a href="{{ url_for('views.download_invoice', order_id=item.id) }}" class="btn btn-primary">Download Invoice (PNG)</a>
+                                    <a href="{{ url_for('views.download_invoice', order_id=item.id) }}" class="btn btn-primary">Download</a>
                                 {% endif %}
                             </div>
+                            <div class="col-sm-12">
+                                    {% if is_admin and item.status != 'On Delivery' %}
+                                    <form action="{{ url_for('views.mark_as_delivery', order_id=item.id) }}" method="POST">
+                                        <button type="submit">On Delivery</button>
+                                    </form>
+                                    {% endif %}
+                            </div>
+
+                            <div class="col-sm-12">
+                                    {% if item.status == 'On Delivery' and not is_admin %}
+                                    <form action="{{ url_for('views.order_arrived', order_user_id=item.id) }}" method="POST">
+                                        <button type="submit" class="btn btn-success">The Order Has Arrived</button>
+                                    </form>
+                                    {% endif %}
+                            </div>                                
+
+                            
 
                         </div>
 

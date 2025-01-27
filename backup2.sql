@@ -1,23 +1,24 @@
 -- fasion.`order` definition
 CREATE TABLE `order` (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    `product_name` varchar(100) NOT NULL,
     category VARCHAR(20) NOT NULL,
     gender ENUM('men', 'women', 'child') NOT NULL,
     size ENUM('S', 'M', 'L', 'XL', 'XXL') NOT NULL,
     color VARCHAR(20) NOT NULL,
     quantity INT NOT NULL,
     price INT NOT NULL,
-    status ENUM('Pending', 'Paid', 'Delivered', 'Accept') NOT NULL,
+    status ENUM('Pending', 'Paid', 'On Delivery', 'The order has arrived') NOT NULL,
     shipping_cost INT NOT NULL,               # Total jumlah produk
     grand_total INT NOT NULL,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Tanggal pesanan (gunakan default untuk waktu saat ini)
 
-    customer_link INT NOT NULL,
-    product_link INT NOT NULL,
+    customer_id INT NOT NULL,
+    product_id INT NOT NULL,
 
     -- Menambahkan Foreign Keys
-    FOREIGN KEY (customer_link) REFERENCES customer(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_link) REFERENCES product(id) ON DELETE CASCADE
+    FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
 
 
@@ -25,18 +26,19 @@ CREATE TABLE `order` (
 
 CREATE TABLE `cart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(100) NOT NULL,
   `category` varchar(20) NOT NULL,
   `gender` enum('men','women','child') NOT NULL,
   `size` enum('S','M','L','XL') NOT NULL,
   `color` varchar(20) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `customer_link` int(11) NOT NULL,
-  `product_link` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `customer_link` (`customer_link`),
-  KEY `product_link` (`product_link`),
-  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_link`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_link`) REFERENCES `product` (`id`) ON DELETE CASCADE
+  KEY `customer_id` (`customer_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- fasion.product definition
@@ -86,3 +88,57 @@ CREATE TABLE `payment` (
   UNIQUE KEY `name` (`payment_method`),
   UNIQUE KEY `number` (`payment_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+
+
+-- fasion.`order` definition
+
+CREATE TABLE `order_user` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `category` varchar(20) NOT NULL,
+  `gender` enum('men','women','child') NOT NULL,
+  `size` enum('S','M','L','XL','XXL') NOT NULL,
+  `color` varchar(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `status` enum('Pending','Paid','On Delivery','The order has arrived') NOT NULL,
+  `shipping_cost` int(11) NOT NULL,
+  `grand_total` int(11) NOT NULL,
+  `order_date` datetime DEFAULT current_timestamp(),
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `order_user_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `order_user_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- fasion.history definition
+
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_user_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `size` varchar(10) DEFAULT NULL,
+  `color` varchar(20) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `shipping_cost` int(11) NOT NULL,
+  `grand_total` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `date_completed` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `history_fk1` (`customer_id`),
+  KEY `history_fk2` (`product_id`),
+  KEY `history_fk3` (`order_user_id`),
+  CONSTRAINT `history_fk1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `history_fk2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `history_fk3` FOREIGN KEY (`order_user_id`) REFERENCES `order_user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
