@@ -2,166 +2,92 @@
 
 {% block title %} Home {% endblock %}
 
-
 {% block body %}
 
-<div class="container text-center">
-    <div class="row" style="margin: 10px;">
-      <div class="col " style="margin: 3px;">
-        <div class="list-group" id="right1">
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                <span class="link-name">Supermarket</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-user" aria-hidden="true"></i>
-                <span class="link-name">Health & Beuty</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa-solid fa-comment"></i>                
-                <span class="link-name">Home & Office</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-camera" aria-hidden="true"></i>
-                <span class="link-name">Fashion</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-audio-description" aria-hidden="true"></i>
-                <span class="link-name">Electronics</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-cubes" aria-hidden="true"></i>
-                <span class="link-name">Gaming</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-child" aria-hidden="true"></i>
-                <span class="link-name">Baby Products</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-bicycle" aria-hidden="true"></i>
-                <span class="link-name">Sporting Goods</span>
-            </a>
-            <a href="" class="list-group-item list-group-item-action">
-                <i class="fa fa-binoculars" aria-hidden="true"></i>
-                <span class="link-name">Garden & Outdoor</span>
-            </a>
-
-        </div>
-      </div>
-
-
-      <div class="col-md-7" style="margin: 3px;">
-        <img src="../static/images/center.gif" alt="" style="width: 600px; height: 365px; border-radius: 10px;">
-      </div>
-      <div class="col-md-2">
-        <div class="row" style="background-color: white; border-radius: 10px;">
-        
-            <div class="row" style="display: flex; margin-top: 5px;">
-                <div class="col">
-                    <img src="../static/images/help.png" alt="" style="width: 30px; height: 30px; margin-left: -30px;">
-                </div>
-                <div class="col">
-                    <h6 style="font-family:'Times New Roman', Times, serif; font-size: 12px; margin-left: -40px; font-weight: 600;">HELP CENTER</h6>
-                    <p style="font-size: small; color: gray; margin-left: -30px; margin-top: -10px;">Customer care</p>
-                </div>
-            </div>
-
-            <div class="row" style="display: flex; margin-top: 5px;">
-                <div class="col">
-                    <img src="../static/images/return.png" alt="" style="width: 30px; height: 30px; margin-left: -30px;">
-                </div>
-                <div class="col">
-                    <h6 style="font-family:'Times New Roman', Times, serif; font-size: 12px; margin-left: -40px; font-weight: 600;">EASY RETURN</h6>
-                    <p style="font-size: small; color: gray; margin-left: -30px; margin-top: -10px;">Quick Refund</p>
-                </div>
-            </div>
-
-            <div class="row" style="display: flex; margin-top: 5px;">
-                <div class="col">
-                    <img src="../static/images/payment.png" alt="" style="width: 30px; height: 30px; margin-left: -30px;">
-                </div>
-                <div class="col">
-                    <h6 style="font-family:'Times New Roman', Times, serif; font-size: 12px; margin-left: -40px; font-weight: 600;">SELL ON AMAZON</h6>
-                    <p style="font-size: small; color: gray; margin-left: -30px; margin-top: -10px;">FBA Program</p>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 12px;">
-            <div class="col">
-                <img src="../static/images/right2.gif" alt="" class="right2">
-            </div>
-        
-        </div>
-      </div>
-    </div>
+<!-- Banner Potongan Harga -->
+<div class="alert alert-info text-center" role="alert" style="font-size: 18px; font-weight: bold;">
+    Dapatkan Potongan Harga Rp 50,000 untuk Semua Produk Flash Sale!
 </div>
 
+<!-- Filter Produk Toggle Button -->
+<button class="btn btn-info mb-3" id="filterToggleBtn">Toggle Filters</button>
 
-<div class="container text-center">
-    <div class="row" style="margin: 8px;">
-        <div class="col" style="display: flex; background-color: white; border-radius: 10px; padding: 7px; margin: 5px;">
-            <img src="../static/images/techweek.png" alt="" style="width: 30px; height: 30px;">
-            <h6 style="margin: 4px">Tech Week</h6>
+<!-- Filter Produk (Initial State Hidden) -->
+<div class="container mb-4" id="filterSection" class="filter-section">
+    <form method="GET" action="/search">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="search" class="form-control" placeholder="Filter by Product Name" value="{{ request.args.get('search') }}">
+            </div>
+            <div class="col-md-4">
+                <select name="gender" class="form-control">
+                    <option value="">Filter by Gender</option>
+                    <option value="men" {% if request.args.get('gender') == 'men' %} selected {% endif %}>men</option>
+                    <option value="women" {% if request.args.get('gender') == 'women' %} selected {% endif %}>women</option>
+                    <option value="kids" {% if request.args.get('gender') == 'kids' %} selected {% endif %}>kids</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="size" class="form-control">
+                    <option value="">Filter by Size</option>
+                    <option value="S" {% if request.args.get('size') == 'S' %} selected {% endif %}>S</option>
+                    <option value="M" {% if request.args.get('size') == 'M' %} selected {% endif %}>M</option>
+                    <option value="L" {% if request.args.get('size') == 'L' %} selected {% endif %}>L</option>
+                    <option value="XL" {% if request.args.get('size') == 'XL' %} selected {% endif %}>XL</option>
+                    <option value="XXL" {% if request.args.get('size') == 'XXL' %} selected {% endif %}>XXL</option>
+                </select>
+            </div>
         </div>
-        <div class="col" style="display: flex; background-color: white; border-radius: 10px; padding: 7px; margin: 5px;">
-            <img src="../static/images/FreeDelivery.png" alt="" style="width: 30px; height: 30px;">
-            <h6 style="margin: 4px">Free Delivery</h6>
-        </div>
-        <div class="col" style="display: flex; background-color: white; border-radius: 10px; padding: 7px; margin: 5px;">
-            <img src="../static/images/food.png" alt="" style="width: 30px; height: 30px;">
-            <h6 style="margin: 4px">Amazon Food</h6>
-        </div>
-        <div class="col" style="display: flex; background-color: white; border-radius: 10px; padding: 7px; margin: 5px;">
-            <img src="../static/images/airtime.png" alt="" style="width: 30px; height: 30px;">
-            <h6 style="margin: 4px">Airtime & Bills</h6>
-        </div>
- 
-    </div>
+        <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
+    </form>
 </div>
 
-
-<div class="container text-center">
-    <div class="row" style="margin: 8px; background-color: rgb(219, 218, 218);" id="column">
-
+<!-- Daftar Produk -->
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Loop produk -->
         {% for item in items %}
-        <div class="col" style="background-color: white;">
-            <img src="{{ item.product_picture }}" alt="" style="height: 202px; width: 180px; border-radius: 10px;">
-        
-            <!-- Added Category, Gender, Size, and Color -->
-            <div class="row" style="margin-top: 10px;">
-                <p><strong>Name:</strong> {{ item.product_name }}</p>
-                <p><strong>Category:</strong> {{ item.category }}</p>
-                <p><strong>Gender:</strong> {{ item.gender }}</p>
-                <p><strong>Size:</strong> {{ item.size }}</p>
-                <p><strong>Color:</strong> {{ item.color }}</p>
-            </div>
-
-            <div class="row" style="margin-top: 10px;">
-                <div class="col">
-                    <!-- Display price with formatted currency -->
-                    <h5 style="font-weight: 600; font-family: 'Times New Roman', Times, serif;">
-                        <span class="current-price"></span>
-                    </h5>
-                    <strike><p style="color: gray;">
-                        <span class="previous-price"></span>
-                    </p></strike>
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <!-- Gambar Produk -->
+                <div class="zoom-container">
+                    <img src="{{ item.product_picture }}" class="card-img-top zoom-img" alt="{{ item.product_name }}">
                 </div>
-        
-                <div class="col">
-                    <a href="/add-to-cart/{{ item.id }}?product_name={{ item.product_name }}&category={{ item.category }}&gender={{ item.gender }}&size={{ item.size }}&color={{ item.color }}">
-                        Add
+
+                <div class="card-body">
+                    <!-- Informasi Produk -->
+                    <h5 class="card-title">{{ item.product_name }}</h5>
+                    <p class="card-text">
+                        <strong>Category:</strong> {{ item.category }}<br>
+                        <strong>Gender:</strong> {{ item.gender }}<br>
+                        <strong>Size:</strong> {{ item.size }}<br>
+                        <strong>Color:</strong> {{ item.color }}
+                    </p>
+                    
+                    <!-- Harga -->
+                    <h5 class="text-success fw-bold">
+                        Rp: {{ "{:,.0f}".format(item.current_price) }}
+                    </h5>
+
+                    {% if item.previous_price %}
+                    <p class="text-muted">
+                        <small><strike>Rp: {{ "{:,.0f}".format(item.previous_price) }}</strike></small>
+                    </p>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <!-- Tombol Tambah ke Keranjang -->
+                    <a href="/add-to-cart/{{ item.id }}?product_name={{ item.product_name }}&category={{ item.category }}&gender={{ item.gender }}&size={{ item.size }}&color={{ item.color }}" class="btn btn-primary btn-sm">
+                        Add to Cart
                     </a>
-                </div>                
-            </div>
-        
-            <div class="row">
-                <p>{{ item.in_stock }} Items Left</p>
+                    <!-- Stok Tersisa -->
+                    <small class="text-muted">{{ item.in_stock }} Items Left</small>
+                </div>
             </div>
         </div>
         {% endfor %}
-
     </div>
 </div>
 
 {% endblock %}
-

@@ -1,0 +1,20 @@
+/* Filter Section */
+.filter-section {
+    display: none;
+}
+
+/* Zoom effect for product image */
+.zoom-container {
+    overflow: hidden;
+    max-height: 250px;
+}
+
+.zoom-img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.zoom-container:hover .zoom-img {
+    transform: scale(1.2);
+}

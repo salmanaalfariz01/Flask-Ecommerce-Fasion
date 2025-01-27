@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 import os
 import io
 import cv2
+import random
 import numpy as np
 from sqlalchemy import text
 
@@ -36,11 +37,22 @@ API_TOKEN = 'YOUR_API_TOKEN'
 
 @views.route('/')
 def home():
+    # Query produk dengan flash_sale=True dan pastikan hasilnya selalu list
+    items = Product.query.filter_by(flash_sale=True).all()  # Gunakan .all() untuk mendapatkan list
 
-    items = Product.query.filter_by(flash_sale=True)
+    # Pastikan items adalah list sebelum diacak
+    if not isinstance(items, list):
+        items = []
 
-    return render_template('home.html', items=items, cart=Cart.query.filter_by(customer_id=current_user.id).all()
-                           if current_user.is_authenticated else [])
+    # Acak produk hanya jika items berisi data
+    shuffled_items = random.sample(items, len(items)) if items else []
+
+    # Ambil data keranjang hanya jika user login
+    cart = Cart.query.filter_by(customer_id=current_user.id).all() if current_user.is_authenticated else []
+
+    # Kirim data ke template
+    return render_template('home.html', items=shuffled_items, cart=cart)
+
 
 
 @views.route('/add-to-cart/<int:item_id>', methods=['GET'])
@@ -628,6 +640,7 @@ def history():
 
 
 
+
 @views.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -637,10 +650,6 @@ def search():
                            if current_user.is_authenticated else [])
 
     return render_template('search.html')
-
-
-
-
 
 
 
