@@ -35,25 +35,55 @@ API_PUBLISHABLE_KEY = 'YOUR_PUBLISHABLE_KEY'
 API_TOKEN = 'YOUR_API_TOKEN'
 
 
-@views.route('/')
+@views.route('/', methods=['GET', 'POST'])
 def home():
-    # Query produk dengan flash_sale=True dan pastikan hasilnya selalu list
-    items = Product.query.filter_by(flash_sale=True).all()  # Gunakan .all() untuk mendapatkan list
+    # Ambil parameter pencarian dan filter dari URL query
+    search_query = request.args.get('search', '')
+    gender_filter = request.args.get('gender', '')
+    size_filter = request.args.get('size', '')
 
-    # Pastikan items adalah list sebelum diacak
-    if not isinstance(items, list):
-        items = []
+    # Mulai query untuk produk dengan filter flash_sale
+    query = Product.query.filter_by(flash_sale=True)
 
-    # Acak produk hanya jika items berisi data
-    shuffled_items = random.sample(items, len(items)) if items else []
+    # Terapkan filter pencarian berdasarkan nama produk
+    if search_query:
+        query = query.filter(Product.product_name.ilike(f'%{search_query}%'))
 
-    # Ambil data keranjang hanya jika user login
+    # Terapkan filter berdasarkan gender
+    if gender_filter:
+        query = query.filter_by(gender=gender_filter)
+
+    # Terapkan filter berdasarkan ukuran (size)
+    if size_filter:
+        query = query.filter_by(size=size_filter)
+
+    # Ambil data produk yang sudah difilter
+    items = query.all()
+
+    # Acak urutan produk menggunakan random.shuffle
+    random.shuffle(items)
+
+    # Ambil data keranjang (jika user login)
     cart = Cart.query.filter_by(customer_id=current_user.id).all() if current_user.is_authenticated else []
 
-    # Kirim data ke template
-    return render_template('home.html', items=shuffled_items, cart=cart)
+    # Kirim data ke template dengan filter yang diterapkan
+    return render_template(
+        'home.html',
+        items=items,
+        cart=cart,
+        search=search_query,
+        gender=gender_filter,
+        size=size_filter
+    )
 
 
+
+# Halaman About
+@views.route('/about')
+@login_required
+def about():
+    cart = Cart.query.filter_by(customer_id=current_user.id).all() if current_user.is_authenticated else []
+    return render_template('about.html', cart=cart)
 
 @views.route('/add-to-cart/<int:item_id>', methods=['GET'])
 @login_required
@@ -113,15 +143,14 @@ def add_to_cart(item_id):
             print('Error adding item to cart:', e)
             flash(f'Failed to add {item_to_add.product_name} to cart')
 
-    return redirect(request.referrer)
-
-
-
+    # Redirect kembali ke halaman utama
+    return redirect(url_for('views.home'))
 
 
 @views.route('/cart')
 @login_required
 def show_cart():
+    # Ambil semua item dari keranjang berdasarkan customer_id
     cart = Cart.query.filter_by(customer_id=current_user.id).all()
     amount = 0
     for item in cart:
@@ -130,84 +159,70 @@ def show_cart():
     return render_template('cart.html', cart=cart, amount=amount, total=amount+14000)
 
 
+@views.route('/removecart/<int:cart_id>', methods=['GET'])
+@login_required
+def remove_cart(cart_id):
+    # Mencari item di keranjang berdasarkan cart_id dan customer_id
+    cart_item = Cart.query.filter_by(id=cart_id, customer_id=current_user.id).first()
+
+    if not cart_item:
+        return jsonify({'error': 'Item tidak ditemukan'}), 400
+
+    # Hapus item dari keranjang
+    db.session.delete(cart_item)
+    db.session.commit()
+
+    # Hitung ulang total setelah penghapusan
+    cart = Cart.query.filter_by(customer_id=current_user.id).all()
+    amount = sum(item.product.current_price * item.quantity for item in cart)
+
+    return redirect(url_for('views.show_cart'))
+
 @views.route('/pluscart')
 @login_required
 def plus_cart():
-    if request.method == 'GET':
-        cart_id = request.args.get('cart_id')
-        cart_item = Cart.query.get(cart_id)
-        cart_item.quantity = cart_item.quantity + 1
-        db.session.commit()
+    cart_id = request.args.get('cart_id')
+    cart_item = Cart.query.filter_by(id=cart_id, customer_id=current_user.id).first()
 
-        cart = Cart.query.filter_by(customer_id=current_user.id).all()
+    if not cart_item:
+        return jsonify({'error': 'Invalid cart item'}), 400
 
-        amount = 0
+    # Tambah kuantitas
+    cart_item.quantity += 1
+    db.session.commit()
 
-        for item in cart:
-            amount += item.product.current_price * item.quantity
+    # Menghitung total baru
+    cart = Cart.query.filter_by(customer_id=current_user.id).all()
+    amount = sum(item.product.current_price * item.quantity for item in cart)
 
-        data = {
-            'quantity': cart_item.quantity,
-            'amount': amount,
-            'total': amount + 14000
-        }
-
-        return jsonify(data)
-
+    return jsonify({
+        'quantity': cart_item.quantity,  # Mengirim kuantitas terbaru
+        'total': amount + 14000  # Total dengan biaya pengiriman
+    })
 
 @views.route('/minuscart')
 @login_required
 def minus_cart():
-    if request.method == 'GET':
-        cart_id = request.args.get('cart_id')
-        cart_item = Cart.query.get(cart_id)
+    cart_id = request.args.get('cart_id')
+    cart_item = Cart.query.filter_by(id=cart_id, customer_id=current_user.id).first()
 
-        # Ensure quantity does not go below 0
-        if cart_item.quantity > 0:
-            cart_item.quantity = cart_item.quantity - 1
-            db.session.commit()
+    if not cart_item:
+        return jsonify({'error': 'Invalid cart item'}), 400
 
-        # Get the updated cart and calculate the total amount
-        cart = Cart.query.filter_by(customer_id=current_user.id).all()
-        amount = 0
-
-        for item in cart:
-            amount += item.product.current_price * item.quantity
-
-        # Add shipping cost to the total
-        data = {
-            'quantity': cart_item.quantity,  # This will be 0 if quantity was 0 before update
-            'amount': amount,
-            'total': amount + 14000  # Assuming shipping cost is 14000
-        }
-
-        return jsonify(data)
-
-
-
-@views.route('removecart')
-@login_required
-def remove_cart():
-    if request.method == 'GET':
-        cart_id = request.args.get('cart_id')
-        cart_item = Cart.query.get(cart_id)
-        db.session.delete(cart_item)
+    # Kurangi kuantitas jika lebih dari 1
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
         db.session.commit()
 
-        cart = Cart.query.filter_by(customer_id=current_user.id).all()
+    # Menghitung total baru
+    cart = Cart.query.filter_by(customer_id=current_user.id).all()
+    amount = sum(item.product.current_price * item.quantity for item in cart)
 
-        amount = 0
+    return jsonify({
+        'quantity': cart_item.quantity,  # Mengirim kuantitas terbaru
+        'total': amount + 14000  # Total dengan biaya pengiriman
+    })
 
-        for item in cart:
-            amount += item.product.current_price * item.quantity
-
-        data = {
-            'quantity': cart_item.quantity,
-            'amount': amount,
-            'total': amount + 14000
-        }
-
-        return jsonify(data)
 
 @views.route('/place-order', methods=['POST'])
 @login_required
@@ -637,24 +652,6 @@ def history():
         histories = History.query.filter_by(customer_id=current_user.id).all()
 
     return render_template('history.html', histories=histories)
-
-
-
-
-@views.route('/search', methods=['GET', 'POST'])
-def search():
-    if request.method == 'POST':
-        search_query = request.form.get('search')
-        items = Product.query.filter(Product.product_name.ilike(f'%{search_query}%')).all()
-        return render_template('search.html', items=items, cart=Cart.query.filter_by(customer_id=current_user.id).all()
-                           if current_user.is_authenticated else [])
-
-    return render_template('search.html')
-
-
-
-
-
 
 
 

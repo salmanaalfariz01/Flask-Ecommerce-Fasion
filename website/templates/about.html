@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <!-- Brand Logo/Name -->
+        <div class="navbar-left">
+            <a class="navbar-brand" href="/">Syzea</a>
+            <!-- Navbar Menu (Positioned to the left) -->
+            <a class="navbar-brand" href="/about">About</a>
+        </div>
+
+        <!-- Navbar Icons (Positioned to the right) -->
+        <div class="navbar-icons">
+            <a href="/cart" class="icon-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge">{{ cart | length if cart else 0 }}</span>
+            </a>
+            <a href="/history" class="icon-link">
+                <i class="fas fa-history"></i>
+            </a>
+
+            <!-- Dropdown for Account -->
+            <div class="dropdown">
+                <button class="dropdown-toggle" onclick="toggleDropdown()">
+                    <i class="fas fa-user-circle"></i> <!-- Icon for Account -->
+                    {% if current_user.is_authenticated %}
+                    <span>{{ current_user.username }}</span> <!-- Display the logged-in user's name -->
+                    {% else %}
+                    <span>Account</span>
+                    {% endif %}
+                </button>
+                <ul class="dropdown-menu">
+                    {% if current_user.is_authenticated %}
+                    <li><a href="/profile/{{ current_user.id }}">Profile</a></li>
+                    <li><a href="/orders">Orders</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="/login">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main>
+    <h2>Welcome to Syzea Store</h2>
+    <div class="social-icons">
+        <!-- Icon Shopee -->
+        <a href="https://shopee.co.id/syzea_factory_outlet" target="_blank" class="icon-link">
+            <i class="fab fa-shopify"></i>
+            <span>Shopee</span>
+        </a>
+        <!-- Icon Facebook -->
+        <a href="https://web.facebook.com/SyzeaFOBekasi/?locale=id_ID&_rdc=1&_rdr#" target="_blank" class="icon-link">
+            <i class="fab fa-facebook-f"></i>
+            <span>Facebook</span>
+        </a>
+        <!-- Icon WhatsApp -->
+        <a href="https://wa.me/08987108218" target="_blank" class="icon-link">
+            <i class="fab fa-whatsapp"></i>
+            <span>WhatsApp</span>
+        </a>
+                <!-- Icon Instagram -->
+        <a href="https://www.instagram.com/syzea_fo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="icon-link">
+            <i class="fab fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+        <!-- Icon Maps -->
+        <a href="https://www.google.com/maps/place/Syzea+Graha/@-6.1766441,106.993931,17z/data=!3m1!4b1!4m6!3m5!1s0x2e698bd18d9cf43b:0x4f20d4551f5ba14!8m2!3d-6.1766494!4d106.9965059!16s%2Fg%2F11bbrhyykr?entry=ttu&g_ep=EgoyMDI1MDEwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="icon-link">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Maps</span>
+        </a>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <p>&copy; 2025 Syzea. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+
+
+<script src="{{ url_for('static', filename='js/about.js') }}"></script>
+<script>
+    function toggleDropdown() {
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+</html>

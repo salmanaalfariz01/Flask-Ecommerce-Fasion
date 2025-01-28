@@ -1,5 +1,19 @@
-// Toggle Filter Section
-document.getElementById("filterToggleBtn").addEventListener("click", function() {
-    const filterSection = document.getElementById("filterSection");
-    filterSection.style.display = filterSection.style.display === "none" ? "block" : "none";
-});
+// Tunggu sampai halaman sepenuhnya dimuat
+window.onload = function() {
+    // Ambil semua elemen dengan kelas 'alert' yang bukan 'banner-info'
+    const flashMessages = document.querySelectorAll('.alert:not(.banner-info)');
+    
+    // Loop untuk mengatur waktu hilangnya pesan flash
+    flashMessages.forEach((message) => {
+        // Menyembunyikan pesan flash setelah 2 detik
+        setTimeout(() => {
+            message.style.display = 'none';
+        }, 2000); // 2000ms = 2 detik
+    });
+}
+
+
+function toggleDropdown() {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('show');
+}

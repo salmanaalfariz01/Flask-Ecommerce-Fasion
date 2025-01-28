@@ -147,9 +147,9 @@ class History(db.Model):
     size = db.Column(db.String(10), nullable=True)  # Ukuran
     color = db.Column(db.String(20), nullable=True)  # Warna
     quantity = db.Column(db.Integer, nullable=False)  # Jumlah
-    price = db.Column(db.Float, nullable=False)  # Harga per produk
-    shipping_cost = db.Column(db.Float, nullable=False)  # Biaya pengiriman
-    grand_total = db.Column(db.Float, nullable=False)  # Total harga
+    price = db.Column(db.Integer, nullable=False)  # Harga per produk
+    shipping_cost = db.Column(db.Integer, nullable=False)  # Biaya pengiriman
+    grand_total = db.Column(db.Integer, nullable=False)  # Total harga
     status = db.Column(db.String(50), nullable=False)  # Status pesanan
     date_completed = db.Column(db.DateTime(timezone=True), default=datetime.now)
 

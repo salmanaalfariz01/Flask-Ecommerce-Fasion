@@ -1,0 +1,247 @@
+
+/* Global Styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Membuat body dan konten utama memenuhi tinggi layar */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Memastikan tinggi body minimal adalah 100% viewport */
+    margin: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #000;
+    color: #fff;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Membatasi lebar kontainer */
+    margin: 0 auto; /* Membuat navbar terpusat */
+}
+
+/* Navbar Left (Logo and Menu) */
+.navbar-left {
+    display: flex;
+    gap: 30px; /* Menambahkan jarak antar elemen di dalam div */
+    align-items: center;
+}
+
+
+.navbar .navbar-brand {
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar-brand:hover {
+    color: #0056b3;
+
+}
+
+
+
+/* Navbar Icons */
+.navbar-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.icon-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.icon-link:hover {
+    color: #0056b3;
+}
+
+.badge {
+    background-color: #dc3545;
+    border-radius: 50%;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+/* Account Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spacing between icon and text */
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+.dropdown-toggle i {
+    font-size: 1.2rem; /* Make the icon larger */
+}
+
+.dropdown-toggle span {
+    font-size: 1rem; /* Adjust text size */
+}
+
+.dropdown-menu {
+    list-style: none;
+    padding: 10px;
+    background-color: #333;
+    position: absolute;
+    display: none;
+    border-radius: 5px;
+    min-width: 150px;
+    top: 100%;
+    right: 0;
+}
+
+.dropdown.show .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    margin: 5px 0;
+}
+
+.dropdown-menu a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+}
+
+.dropdown-menu a:hover {
+    color: #0056b3;
+}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-menu {
+        margin-top: 10px;
+    }
+
+    .navbar-icons {
+        margin-top: 10px;
+        gap: 15px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .search-input, .search-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Center Title */
+.cart-title {
+    color: Black;
+    text-align: center;
+}
+
+/* Card item structure */
+.cart-item {
+    margin-bottom: 20px;
+}
+
+/* Ensuring that the product section is on the left (8/12) and the summary on the right (4/12) */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Cart Summary Box */
+.card-body {
+    padding: 20px;
+}
+
+/* Ensure the cards for both product and summary look aligned */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Adjust the product image size */
+.img-thumbnail {
+    max-width: 150px;
+    max-height: 150px;
+    margin-bottom: 15px;
+}
+
+/* Remove unnecessary list item spacing */
+.list-group-item {
+    padding: 10px 15px;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Additional spacing for the cart section */
+.my-3 {
+    margin-top: 15px;
+}
+
+/* Responsive Design for Mobile View */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col-sm-8, .col-sm-4 {
+        max-width: 100%;
+    }
+}
+
+
+.plus-cart {
+    position: relative; /* pastikan tombol tidak tertutup oleh elemen lain */
+    z-index: 10; /* pastikan tombol berada di atas elemen lain */
+}
+
+
+/* Konten utama akan mengisi ruang yang tersisa */
+main {
+    flex-grow: 1;
+}
+
+/* Footer selalu berada di bawah */
+.footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    position: inherit;
+    bottom: 0;
+    width: 100%;
+}
