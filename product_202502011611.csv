@@ -1,0 +1,197 @@
+"id","product_name","current_price","previous_price","size","category","gender","color","in_stock","product_picture","flash_sale","date_added"
+2,cabana short sleeves Shirt,200000,250000,S,Shirt,child,White,6,./media/s-child-white.jpg,1,2025-01-25 10:25:52.000
+3,cabana short sleeves Shirt,200000,250000,M,Shirt,child,White,17,./media/m-child-white.jpg,1,2025-01-25 10:30:55.000
+4,cabana short sleeves Shirt,200000,250000,L,Shirt,child,White,19,./media/l-child-white.jpg,1,2025-01-25 17:53:59.000
+5,cabana short sleeves Shirt,200000,250000,XL,Shirt,child,White,18,./media/xl-child-white.jpg,1,2025-01-25 17:54:14.000
+6,cabana short sleeves Shirt,200000,250000,S,Shirt,child,Red,18,./media/s-child-red.jpg,1,2025-01-25 18:00:47.000
+7,cabana short sleeves Shirt,200000,250000,M,Shirt,child,Red,20,./media/m-child-red.jpg,1,2025-01-25 18:00:57.000
+8,cabana short sleeves Shirt,200000,250000,L,Shirt,child,Red,20,./media/l-child-red.jpg,1,2025-01-25 18:01:16.000
+9,cabana short sleeves Shirt,200000,250000,XL,Shirt,child,Red,17,./media/xl-child-red.jpg,1,2025-01-25 18:01:27.000
+10,cabana short sleeves Shirt,200000,250000,XL,Shirt,child,Navy,20,./media/xl-child-navy.jpg,1,2025-01-25 18:05:20.000
+11,cabana short sleeves Shirt,200000,250000,L,Shirt,child,Navy,18,./media/l-child-navy.jpg,1,2025-01-25 18:05:35.000
+12,cabana short sleeves Shirt,200000,250000,M,Shirt,child,Navy,20,./media/m-child-navy.jpg,1,2025-01-25 18:05:53.000
+13,cabana short sleeves Shirt,200000,250000,S,Shirt,child,Navy,20,./media/s-child-navy.jpg,1,2025-01-25 18:06:08.000
+14,cabana short sleeves Shirt,200000,250000,S,Shirt,child,Brown,20,./media/cabana-brown.jpg,1,2025-01-25 18:08:50.000
+15,cabana short sleeves Shirt,200000,250000,M,Shirt,child,Brown,20,./media/cabana-brown.jpg,1,2025-01-25 18:09:04.000
+16,cabana short sleeves Shirt,200000,250000,L,Shirt,child,Brown,19,./media/cabana-brown.jpg,1,2025-01-25 18:09:15.000
+17,cabana short sleeves Shirt,200000,250000,XL,Shirt,child,Brown,20,./media/cabana-brown.jpg,1,2025-01-25 18:09:29.000
+18,cabana short sleeves Shirt,200000,250000,XL,Shirt,child,Green,20,./media/cabana-green.jpg,1,2025-01-25 18:11:28.000
+19,cabana short sleeves Shirt,200000,250000,L,Shirt,child,Green,20,./media/cabana-green.jpg,1,2025-01-25 18:11:40.000
+20,cabana short sleeves Shirt,200000,250000,M,Shirt,child,Green,20,./media/cabana-green.jpg,1,2025-01-25 18:11:53.000
+21,cabana short sleeves Shirt,200000,250000,S,Shirt,child,Green,20,./media/cabana-green.jpg,1,2025-01-25 18:12:04.000
+22,cabana short sleeves Shirt,200000,250000,S,Shirt,child,Grey,20,./media/cabana-grey.jpg,1,2025-01-25 18:12:22.000
+23,cabana short sleeves Shirt,200000,250000,M,Shirt,child,Grey,20,./media/cabana-grey.jpg,1,2025-01-25 18:12:50.000
+24,cabana short sleeves Shirt,200000,250000,L,Shirt,child,Grey,20,./media/cabana-grey.jpg,1,2025-01-25 18:13:01.000
+25,cabana short sleeves Shirt,200000,250000,XL,Shirt,child,Grey,20,./media/cabana-grey.jpg,1,2025-01-25 18:13:12.000
+26,jersey polo shirt,210000,260000,XL,Shirt,child,Blue,20,./media/jersey-polo-_shirt-blue.jpg,1,2025-01-25 18:14:46.000
+27,jersey polo shirt,210000,260000,L,Shirt,child,Blue,17,./media/jersey-polo-_shirt-blue.jpg,1,2025-01-25 18:16:10.000
+28,jersey polo shirt,210000,260000,M,Shirt,child,Blue,20,./media/jersey-polo-_shirt-blue.jpg,1,2025-01-25 18:16:22.000
+29,jersey polo shirt,210000,260000,S,Shirt,child,Blue,20,./media/jersey-polo-_shirt-blue.jpg,1,2025-01-25 18:16:34.000
+30,cotton shirt,220000,270000,S,Shirt,child,Red,20,./media/cotton-shirt-red.jpg,1,2025-01-25 18:17:55.000
+31,cotton shirt,220000,270000,M,Shirt,child,Red,20,./media/cotton-shirt-red.jpg,1,2025-01-25 18:18:12.000
+32,cotton shirt,220000,270000,L,Shirt,child,Red,20,./media/cotton-shirt-red.jpg,1,2025-01-25 18:18:22.000
+33,cotton shirt,220000,270000,XL,Shirt,child,Red,20,./media/cotton-shirt-red.jpg,1,2025-01-25 18:18:34.000
+34,EQ Lissabon ss shirt,250000,300000,XL,Shirt,child,Blue,20,./media/EQ-Lissabon-ss-_shirt-blue.jpg,1,2025-01-25 18:19:57.000
+35,EQ Lissabon ss shirt,250000,300000,L,Shirt,child,Blue,20,./media/EQ-Lissabon-ss-_shirt-blue.jpg,1,2025-01-25 18:20:14.000
+36,EQ Lissabon ss shirt,250000,300000,M,Shirt,child,Blue,20,./media/EQ-Lissabon-ss-_shirt-blue.jpg,1,2025-01-25 18:20:23.000
+37,EQ Lissabon ss shirt,250000,300000,S,Shirt,child,Blue,19,./media/EQ-Lissabon-ss-_shirt-blue.jpg,1,2025-01-25 18:20:35.000
+38,Rip Curl Checked In Flannel Shirt,300000,350000,S,Shirt,child,Blue,20,./media/Rip-Curl-Checked-In-Flannel-Shirt-blue.jpg,1,2025-01-25 18:21:44.000
+39,Rip Curl Checked In Flannel Shirt,300000,350000,M,Shirt,child,Blue,20,./media/Rip-Curl-Checked-In-Flannel-Shirt-blue.jpg,1,2025-01-25 18:21:53.000
+40,Rip Curl Checked In Flannel Shirt,300000,350000,L,Shirt,child,Blue,20,./media/Rip-Curl-Checked-In-Flannel-Shirt-blue.jpg,1,2025-01-25 18:22:01.000
+41,Rip Curl Checked In Flannel Shirt,300000,350000,XL,Shirt,child,Blue,20,./media/Rip-Curl-Checked-In-Flannel-Shirt-blue.jpg,1,2025-01-25 18:22:10.000
+42,flannel cotton shirt,400000,450000,XL,Shirt,child,Green,20,./media/flannel-cotton-shirt-green.jpg,1,2025-01-25 18:24:16.000
+43,flannel cotton shirt,400000,450000,L,Shirt,child,Green,20,./media/flannel-cotton-shirt-green.jpg,1,2025-01-25 18:24:25.000
+44,flannel cotton shirt,400000,450000,M,Shirt,child,Green,20,./media/flannel-cotton-shirt-green.jpg,1,2025-01-25 18:24:39.000
+45,flannel cotton shirt,400000,450000,S,Shirt,child,Green,20,./media/flannel-cotton-shirt-green.jpg,1,2025-01-25 18:24:49.000
+46,flannel cotton shirt,400000,450000,S,Shirt,child,White,20,./media/flannel-cotton-shirt-white.jpg,1,2025-01-25 18:25:01.000
+47,flannel cotton shirt,400000,450000,M,Shirt,child,White,20,./media/flannel-cotton-shirt-white.jpg,1,2025-01-25 18:25:27.000
+48,flannel cotton shirt,400000,450000,L,Shirt,child,White,20,./media/flannel-cotton-shirt-white.jpg,1,2025-01-25 18:25:36.000
+49,flannel cotton shirt,400000,450000,XL,Shirt,child,White,20,./media/flannel-cotton-shirt-white.jpg,1,2025-01-25 18:25:49.000
+50,Cotton piqua polo shirt,500000,550000,XL,Shirt,child,Green,20,./media/Cotton-piqua-polo-shirt-green.jpg,1,2025-01-25 18:27:27.000
+51,Cotton piqua polo shirt,500000,550000,L,Shirt,child,Green,20,./media/Cotton-piqua-polo-shirt-green.jpg,1,2025-01-25 18:27:38.000
+52,Cotton piqua polo shirt,500000,550000,M,Shirt,child,Green,20,./media/Cotton-piqua-polo-shirt-green.jpg,1,2025-01-25 18:27:53.000
+53,Cotton piqua polo shirt,500000,550000,S,Shirt,child,Green,20,./media/Cotton-piqua-polo-shirt-green.jpg,1,2025-01-25 18:28:04.000
+54,Polo Shirt With Embroidered Detail,700000,750000,S,Shirt,child,Brown,20,./media/Polo-Shirt-With_Embroidered-Detail-brown.jpg,1,2025-01-25 18:29:50.000
+55,Polo Shirt With Embroidered Detail,700000,750000,M,Shirt,child,Brown,20,./media/Polo-Shirt-With_Embroidered-Detail-brown.jpg,1,2025-01-25 18:29:59.000
+56,Polo Shirt With Embroidered Detail,700000,750000,L,Shirt,child,Brown,20,./media/Polo-Shirt-With_Embroidered-Detail-brown.jpg,1,2025-01-25 18:30:25.000
+57,Polo Shirt With Embroidered Detail,700000,750000,XL,Shirt,child,Brown,20,./media/Polo-Shirt-With_Embroidered-Detail-brown.jpg,1,2025-01-25 18:30:33.000
+58,Polo Shirt With Embroidered Detail,700000,750000,XL,Shirt,child,Black,20,./media/Polo-Shirt-With-Embroidered-Detail-black.jpg,1,2025-01-25 18:31:03.000
+59,Polo Shirt With Embroidered Detail,700000,750000,L,Shirt,child,Black,20,./media/Polo-Shirt-With-Embroidered-Detail-black.jpg,1,2025-01-25 18:31:12.000
+60,Polo Shirt With Embroidered Detail,700000,750000,M,Shirt,child,Black,20,./media/Polo-Shirt-With-Embroidered-Detail-black.jpg,1,2025-01-25 18:31:20.000
+61,Polo Shirt With Embroidered Detail,700000,750000,S,Shirt,child,Black,20,./media/Polo-Shirt-With-Embroidered-Detail-black.jpg,1,2025-01-25 18:31:31.000
+62,Oxford Cotton Shirt,270000,320000,S,Shirt,child,White,20,./media/Oxford-Cotton-Shirt-white.jpg,1,2025-01-25 18:33:33.000
+63,Oxford Cotton Shirt,270000,320000,M,Shirt,child,White,20,./media/Oxford-Cotton-Shirt-white.jpg,1,2025-01-25 18:33:48.000
+64,Oxford Cotton Shirt,270000,320000,L,Shirt,child,White,20,./media/Oxford-Cotton-Shirt-white.jpg,1,2025-01-25 18:33:58.000
+65,Oxford Cotton Shirt,270000,320000,XL,Shirt,child,White,20,./media/Oxford-Cotton-Shirt-white.jpg,1,2025-01-25 18:34:07.000
+66,Regular-Fit Cotton Striped Shirt,370000,420000,XL,Shirt,child,Blue,20,./media/Regular-Fit-Cotton-Striped-Shirt-blue.jpg,1,2025-01-25 18:59:20.000
+67,Regular-Fit Cotton Striped Shirt,370000,420000,L,Shirt,child,Blue,20,./media/Regular-Fit-Cotton-Striped-Shirt-blue.jpg,1,2025-01-25 18:59:31.000
+68,Regular-Fit Cotton Striped Shirt,370000,420000,M,Shirt,child,Blue,20,./media/Regular-Fit-Cotton-Striped-Shirt-blue.jpg,1,2025-01-25 18:59:39.000
+71,Regular-Fit Cotton Striped Shirt,370000,420000,S,Shirt,child,Blue,20,./media/Regular-Fit-Cotton-Striped-Shirt-blue.jpg,1,2025-01-25 19:01:51.000
+72,Button Down Classic Collar,200000,250000,S,Shirt,men,Blue,20,./media/Button-Down-Classic-Collar-blue.jpg,1,2025-01-25 19:04:19.000
+73,Button Down Classic Collar,200000,250000,M,Shirt,men,Blue,20,./media/Button-Down-Classic-Collar-blue.jpg,1,2025-01-25 19:04:29.000
+74,Button Down Classic Collar,200000,250000,L,Shirt,men,Blue,20,./media/Button-Down-Classic-Collar-blue.jpg,1,2025-01-25 19:04:45.000
+75,Button Down Classic Collar,200000,250000,XL,Shirt,men,Blue,20,./media/Button-Down-Classic-Collar-blue.jpg,1,2025-01-25 19:04:56.000
+76,Button Down Classic Collar,200000,250000,XL,Shirt,men,Grey,20,./media/Button-Down-Classic-Collar-grey.jpg,1,2025-01-25 19:07:20.000
+77,Button Down Classic Collar,200000,250000,L,Shirt,men,Grey,20,./media/Button-Down-Classic-Collar-grey.jpg,1,2025-01-25 19:07:29.000
+78,Button Down Classic Collar,200000,250000,M,Shirt,men,Grey,20,./media/Button-Down-Classic-Collar-grey.jpg,1,2025-01-25 19:07:41.000
+79,Button Down Classic Collar,200000,250000,S,Shirt,men,Grey,20,./media/Button-Down-Classic-Collar-grey.jpg,1,2025-01-25 19:07:53.000
+80,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,S,Shirt,men,Black,20,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-black.jpg,1,2025-01-25 19:19:47.000
+81,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,M,Shirt,men,Black,20,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-black.jpg,1,2025-01-25 19:23:16.000
+82,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,L,Shirt,men,Black,20,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-black.jpg,1,2025-01-25 19:23:36.000
+83,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,XL,Shirt,men,Black,20,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-black.jpg,1,2025-01-25 19:23:49.000
+84,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,XL,Shirt,men,Red,20,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-red.jpg,1,2025-01-25 19:24:15.000
+85,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,L,Shirt,men,Red,19,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-red.jpg,1,2025-01-25 19:24:27.000
+86,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,M,Shirt,men,Red,20,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-red.jpg,1,2025-01-25 19:25:18.000
+87,Burgundy Abstract Patterned Slim Fit Shirt,210000,260000,S,Shirt,men,Red,20,./media/Burgundy-Abstract-Patterned-Slim-Fit-Shirt-red.jpg,1,2025-01-25 19:25:30.000
+88,Downy Printed Shirt,170000,220000,S,shirt,men,white,20,./media/Downy-Printed-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+89,Downy Printed Shirt,170000,220000,M,shirt,men,white,20,./media/Downy-Printed-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+90,Downy Printed Shirt,170000,220000,L,shirt,men,white,20,./media/Downy-Printed-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+91,Downy Printed Shirt,170000,220000,XL,shirt,men,white,20,./media/Downy-Printed-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+92,Dillion 2,200000,250000,S,shirt,men,aqua,20,./media/Dillion-2-aqua.jpg,1,2025-01-25 20:11:07.000
+93,Dillion 2,200000,250000,M,shirt,men,aqua,20,./media/Dillion-2-aqua.jpg,1,2025-01-25 20:11:07.000
+94,Dillion 2,200000,250000,L,shirt,men,aqua,20,./media/Dillion-2-aqua.jpg,1,2025-01-25 20:11:07.000
+95,Dillion 2,200000,250000,XL,shirt,men,aqua,20,./media/Dillion-2-aqua.jpg,1,2025-01-25 20:11:07.000
+96,Striped Shirt,250000,300000,S,shirt,men,white,20,./media/Striped-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+97,Striped Shirt,250000,300000,M,shirt,men,white,20,./media/Striped-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+98,Striped Shirt,250000,300000,L,shirt,men,white,20,./media/Striped-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+99,Striped Shirt,250000,300000,XL,shirt,men,white,20,./media/Striped-Shirt-white.jpg,1,2025-01-25 20:11:07.000
+100,Prince Printed Shirt,350000,400000,S,shirt,men,green,20,./media/Prince-Printed-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+101,Prince Printed Shirt,350000,400000,M,shirt,men,green,20,./media/Prince-Printed-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+102,Prince Printed Shirt,350000,400000,L,shirt,men,green,20,./media/Prince-Printed-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+103,Prince Printed Shirt,350000,400000,XL,shirt,men,green,20,./media/Prince-Printed-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+104,Collar Print Linen Shirt,450000,500000,S,shirt,men,black,20,./media/Collar-Print-Linen-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+105,Collar Print Linen Shirt,450000,500000,M,shirt,men,black,20,./media/Collar-Print-Linen-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+106,Collar Print Linen Shirt,450000,500000,L,shirt,men,black,20,./media/Collar-Print-Linen-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+107,Collar Print Linen Shirt,450000,500000,XL,shirt,men,black,20,./media/Collar-Print-Linen-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+108,Palma Short Sleeve Shirt,650000,700000,S,shirt,men,black,20,./media/Palma-Short-Sleeve-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+109,Palma Short Sleeve Shirt,650000,700000,M,shirt,men,black,20,./media/Palma-Short-Sleeve-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+110,Palma Short Sleeve Shirt,650000,700000,L,shirt,men,black,20,./media/Palma-Short-Sleeve-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+111,Palma Short Sleeve Shirt,650000,700000,XL,shirt,men,black,20,./media/Palma-Short-Sleeve-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+112,Mens Long Sleeves Shirt,220000,270000,S,shirt,men,green,20,./media/Mens-Long-Sleeves-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+113,Mens Long Sleeves Shirt,220000,270000,M,shirt,men,green,20,./media/Mens-Long-Sleeves-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+114,Mens Long Sleeves Shirt,220000,270000,L,shirt,men,green,20,./media/Mens-Long-Sleeves-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+115,Mens Long Sleeves Shirt,220000,270000,XL,shirt,men,green,23,./media/Mens-Long-Sleeves-Shirt-green.jpg,1,2025-01-25 20:11:07.000
+116,Mens Long Sleeves Shirt,220000,270000,S,shirt,men,black,20,./media/Mens-Long-Sleeves-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+117,Mens Long Sleeves Shirt,220000,270000,M,shirt,men,black,20,./media/Mens-Long-Sleeves-Shirt-black.jpg,1,2025-01-25 20:11:07.000
+118,Mens Long Sleeves Shirt,220000,270000,L,shirt,men,black,20,./media/Mens-Long-Sleeves-Shirt-black.jpg,1,2025-01-25 20:12:47.000
+119,Mens Long Sleeves Shirt,220000,270000,XL,shirt,men,black,20,./media/Mens-Long-Sleeves-Shirt-black.jpg,1,2025-01-25 20:12:47.000
+120,Adidas Mono Satin Shirt,320000,370000,S,shirt,men,blue,20,./media/Adidas-Mono-Satin-Shirt-blue.jpg,1,2025-01-25 20:12:47.000
+121,Adidas Mono Satin Shirt,320000,370000,M,shirt,men,blue,20,./media/Adidas-Mono-Satin-Shirt-blue.jpg,1,2025-01-25 20:12:47.000
+122,Adidas Mono Satin Shirt,320000,370000,L,shirt,men,blue,20,./media/Adidas-Mono-Satin-Shirt-blue.jpg,1,2025-01-25 20:12:47.000
+123,Adidas Mono Satin Shirt,320000,370000,XL,shirt,men,blue,20,./media/Adidas-Mono-Satin-Shirt-blue.jpg,1,2025-01-25 20:12:47.000
+124,Adidas Mono Satin Shirt,320000,370000,S,shirt,men,brown,19,./media/Adidas-Mono-Satin-Shirt-brown.jpg,1,2025-01-25 20:12:47.000
+125,Adidas Mono Satin Shirt,320000,370000,M,shirt,men,brown,20,./media/Adidas-Mono-Satin-Shirt-brown.jpg,1,2025-01-25 20:12:47.000
+126,Adidas Mono Satin Shirt,320000,370000,L,shirt,men,brown,20,./media/Adidas-Mono-Satin-Shirt-brown.jpg,1,2025-01-25 20:12:47.000
+127,Adidas Mono Satin Shirt,320000,370000,XL,shirt,men,brown,20,./media/Adidas-Mono-Satin-Shirt-brown.jpg,1,2025-01-25 20:12:47.000
+128,Gienta Polo Long Sleeve Polo,150000,200000,S,shirts,women,Blue,20,./media/Gienta-Polo-Long-Sleeve-Polo-blue.jpg,1,2025-01-25 20:56:29.000
+129,Gienta Polo Long Sleeve Polo,150000,200000,M,shirts,women,Blue,20,./media/Gienta-Polo-Long-Sleeve-Polo-blue.jpg,1,2025-01-25 20:56:29.000
+130,Gienta Polo Long Sleeve Polo,150000,200000,L,shirts,women,Blue,20,./media/Gienta-Polo-Long-Sleeve-Polo-blue.jpg,1,2025-01-25 20:56:29.000
+131,Gienta Polo Long Sleeve Polo,150000,200000,XL,shirts,women,Blue,20,./media/Gienta-Polo-Long-Sleeve-Polo-blue.jpg,1,2025-01-25 20:56:29.000
+132,Cordella Polo Slim Fit Polo,160000,210000,S,shirts,women,pink,20,./media/Cordella-Polo-Slim-Fit-Polo-pink.jpg,1,2025-01-25 20:56:29.000
+133,Cordella Polo Slim Fit Polo,160000,210000,M,shirts,women,pink,20,./media/Cordella-Polo-Slim-Fit-Polo-pink.jpg,1,2025-01-25 20:56:29.000
+134,Cordella Polo Slim Fit Polo,160000,210000,L,shirts,women,pink,20,./media/Cordella-Polo-Slim-Fit-Polo-pink.jpg,1,2025-01-25 20:56:29.000
+135,Cordella Polo Slim Fit Polo,160000,210000,XL,shirts,women,pink,20,./media/Cordella-Polo-Slim-Fit-Polo-pink.jpg,1,2025-01-25 20:56:29.000
+136,Farrona Polo,170000,220000,S,shirts,women,red,20,./media/Farrona-Polo-red.jpg,1,2025-01-25 20:56:29.000
+137,Farrona Polo,170000,220000,M,shirts,women,red,20,./media/Farrona-Polo-red.jpg,1,2025-01-25 20:56:29.000
+138,Farrona Polo,170000,220000,L,shirts,women,red,20,./media/Farrona-Polo-red.jpg,1,2025-01-25 20:56:29.000
+139,Farrona Polo,170000,220000,XL,shirts,women,red,18,./media/Farrona-Polo-red.jpg,1,2025-01-25 20:56:29.000
+140,Viela Polo,200000,250000,S,shirts,women,white,20,./media/Viela-Polo-white.jpg,1,2025-01-25 20:56:29.000
+141,Viela Polo,200000,250000,M,shirts,women,white,20,./media/Viela-Polo-white.jpg,1,2025-01-25 20:56:29.000
+142,Viela Polo,200000,250000,L,shirts,women,white,20,./media/Viela-Polo-white.jpg,1,2025-01-25 20:56:29.000
+143,Viela Polo,200000,250000,XL,shirts,women,white,20,./media/Viela-Polo-white.jpg,1,2025-01-25 20:56:29.000
+144,Color Block Shirt Brown,250000,300000,S,shirts,women,brown,20,./media/Color-Block-Shirt-Brown-brown.jpg,1,2025-01-25 20:56:29.000
+145,Color Block Shirt Brown,250000,300000,M,shirts,women,brown,20,./media/Color-Block-Shirt-Brown-brown.jpg,1,2025-01-25 20:56:29.000
+146,Color Block Shirt Brown,250000,300000,L,shirts,women,brown,20,./media/Color-Block-Shirt-Brown-brown.jpg,1,2025-01-25 20:56:29.000
+147,Color Block Shirt Brown,250000,300000,XL,shirts,women,brown,20,./media/Color-Block-Shirt-Brown-brown.jpg,1,2025-01-25 20:56:29.000
+148,Color Block Shirt Brown,250000,300000,S,shirts,women,green,20,./media/Color-Block-Shirt-Brown-green.jpg,1,2025-01-25 20:56:29.000
+149,Color Block Shirt Brown,250000,300000,M,shirts,women,green,20,./media/Color-Block-Shirt-Brown-green.jpg,1,2025-01-25 20:56:29.000
+150,Color Block Shirt Brown,250000,300000,L,shirts,women,green,20,./media/Color-Block-Shirt-Brown-green.jpg,1,2025-01-25 20:56:29.000
+151,Color Block Shirt Brown,250000,300000,XL,shirts,women,green,20,./media/Color-Block-Shirt-Brown-green.jpg,1,2025-01-25 20:56:29.000
+152,Embroidered Linen Shirt,350000,400000,S,shirts,women,white,20,./media/Embroidered-Linen-Shirt-white.jpg,1,2025-01-25 20:56:29.000
+153,Embroidered Linen Shirt,350000,400000,M,shirts,women,white,20,./media/Embroidered-Linen-Shirt-white.jpg,1,2025-01-25 20:56:29.000
+154,Embroidered Linen Shirt,350000,400000,L,shirts,women,white,20,./media/Embroidered-Linen-Shirt-white.jpg,1,2025-01-25 20:56:29.000
+155,Embroidered Linen Shirt,350000,400000,XL,shirts,women,white,20,./media/Embroidered-Linen-Shirt-white.jpg,1,2025-01-25 20:56:29.000
+156,Polkad Polo,500000,550000,S,shirts,women,white,19,./media/Polkad-Polo-white.jpg,1,2025-01-25 20:57:47.000
+157,Polkad Polo,500000,550000,M,shirts,women,white,20,./media/Polkad-Polo-white.jpg,1,2025-01-25 20:57:47.000
+158,Polkad Polo,500000,550000,L,shirts,women,white,20,./media/Polkad-Polo-white.jpg,1,2025-01-25 20:57:47.000
+159,Polkad Polo,500000,550000,XL,shirts,women,white,20,./media/Polkad-Polo-white.jpg,1,2025-01-25 20:57:47.000
+160,Oversize Long Basic Shirt,650000,700000,S,shirts,women,brown,20,./media/Oversize-Long-Basic-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+161,Oversize Long Basic Shirt,650000,700000,M,shirts,women,brown,20,./media/Oversize-Long-Basic-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+162,Oversize Long Basic Shirt,650000,700000,L,shirts,women,brown,20,./media/Oversize-Long-Basic-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+163,Oversize Long Basic Shirt,650000,700000,XL,shirts,women,brown,20,./media/Oversize-Long-Basic-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+164,Oversize Long Basic Shirt,650000,700000,S,shirts,women,green,20,./media/Oversize-Long-Basic-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+165,Oversize Long Basic Shirt,650000,700000,M,shirts,women,green,20,./media/Oversize-Long-Basic-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+166,Oversize Long Basic Shirt,650000,700000,L,shirts,women,green,20,./media/Oversize-Long-Basic-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+167,Oversize Long Basic Shirt,650000,700000,XL,shirts,women,green,20,./media/Oversize-Long-Basic-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+168,Oversize Long Basic Shirt,650000,700000,S,shirts,women,red,20,./media/Oversize-Long-Basic-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+169,Oversize Long Basic Shirt,650000,700000,M,shirts,women,red,20,./media/Oversize-Long-Basic-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+170,Oversize Long Basic Shirt,650000,700000,L,shirts,women,red,20,./media/Oversize-Long-Basic-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+171,Oversize Long Basic Shirt,650000,700000,XL,shirts,women,red,20,./media/Oversize-Long-Basic-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+172,Oversize Long Basic Shirt,650000,700000,S,shirts,women,purple,20,./media/Oversize-Long-Basic-Shirt-purple.jpg,1,2025-01-25 20:57:47.000
+173,Oversize Long Basic Shirt,650000,700000,M,shirts,women,purple,20,./media/Oversize-Long-Basic-Shirt-purple.jpg,1,2025-01-25 20:57:47.000
+174,Oversize Long Basic Shirt,650000,700000,L,shirts,women,purple,20,./media/Oversize-Long-Basic-Shirt-purple.jpg,1,2025-01-25 20:57:47.000
+175,Oversize Long Basic Shirt,650000,700000,XL,shirts,women,purple,20,./media/Oversize-Long-Basic-Shirt-purple.jpg,1,2025-01-25 20:57:47.000
+176,Oversized Long Sleeve Polo Shirt,220000,270000,S,shirts,women,black,20,./media/Oversized-Long-Sleeve-Polo-Shirt-black.jpg,1,2025-01-25 20:57:47.000
+177,Oversized Long Sleeve Polo Shirt,220000,270000,M,shirts,women,black,20,./media/Oversized-Long-Sleeve-Polo-Shirt-black.jpg,1,2025-01-25 20:57:47.000
+178,Oversized Long Sleeve Polo Shirt,220000,270000,L,shirts,women,black,20,./media/Oversized-Long-Sleeve-Polo-Shirt-black.jpg,1,2025-01-25 20:57:47.000
+179,Oversized Long Sleeve Polo Shirt,220000,270000,XL,shirts,women,black,20,./media/Oversized-Long-Sleeve-Polo-Shirt-black.jpg,1,2025-01-25 20:57:47.000
+180,Oversized Long Sleeve Polo Shirt,220000,270000,S,shirts,women,grey,20,./media/Oversized-Long-Sleeve-Polo-Shirt-grey.jpg,1,2025-01-25 20:57:47.000
+181,Oversized Long Sleeve Polo Shirt,220000,270000,M,shirts,women,grey,20,./media/Oversized-Long-Sleeve-Polo-Shirt-grey.jpg,1,2025-01-25 20:57:47.000
+182,Oversized Long Sleeve Polo Shirt,220000,270000,L,shirts,women,grey,20,./media/Oversized-Long-Sleeve-Polo-Shirt-grey.jpg,1,2025-01-25 20:57:47.000
+183,Oversized Long Sleeve Polo Shirt,220000,270000,XL,shirts,women,grey,20,./media/Oversized-Long-Sleeve-Polo-Shirt-grey.jpg,1,2025-01-25 20:57:47.000
+184,Textured Shirt,320000,370000,S,shirts,women,brown,20,./media/Textured-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+185,Textured Shirt,320000,370000,M,shirts,women,brown,20,./media/Textured-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+186,Textured Shirt,320000,370000,L,shirts,women,brown,20,./media/Textured-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+187,Textured Shirt,320000,370000,XL,shirts,women,brown,20,./media/Textured-Shirt-brown.jpg,1,2025-01-25 20:57:47.000
+188,Textured Shirt,320000,370000,S,shirts,women,green,20,./media/Textured-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+189,Textured Shirt,320000,370000,M,shirts,women,green,20,./media/Textured-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+190,Textured Shirt,320000,370000,L,shirts,women,green,20,./media/Textured-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+191,Textured Shirt,320000,370000,XL,shirts,women,green,20,./media/Textured-Shirt-green.jpg,1,2025-01-25 20:57:47.000
+192,Textured Shirt,320000,370000,S,shirts,women,red,20,./media/Textured-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+193,Textured Shirt,320000,370000,M,shirts,women,red,20,./media/Textured-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+194,Textured Shirt,320000,370000,L,shirts,women,red,20,./media/Textured-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+195,Textured Shirt,320000,370000,XL,shirts,women,red,20,./media/Textured-Shirt-red.jpg,1,2025-01-25 20:57:47.000
+196,Textured Shirt,320000,370000,S,shirts,women,black,20,./media/Textured-Shirt-black.jpg,1,2025-01-25 20:57:47.000
+197,Textured Shirt,320000,370000,M,shirts,women,black,20,./media/Textured-Shirt-black.jpg,1,2025-01-25 20:57:47.000
+198,Textured Shirt,320000,370000,L,shirts,women,black,20,./media/Textured-Shirt-black.jpg,1,2025-01-25 20:57:47.000
+199,Textured Shirt,320000,370000,XL,shirts,women,black,20,./media/Textured-Shirt-black.jpg,1,2025-01-25 20:57:47.000
