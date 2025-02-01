@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>Payment Status</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/payment_status.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -51,16 +51,16 @@
         </div>
     </div>
 </nav>
-<div class='history-title'>
-    <h1>Order History</h1>
-</div>
-<div>
-    <table>
+
+    <h1 class='payment-title'>All Payment Status</h1>
+    <table border="1">
         <thead>
             <tr>
-                <th>Customer ID</th>
+                <th>Order ID</th>
+                <th>Status</th>
+                <th>Payment File</th>
                 <th>Product Name</th>
-                <th>Product Image</th>
+                <th>Product Image</th> <!-- Column for product image -->
                 <th>Category</th>
                 <th>Gender</th>
                 <th>Size</th>
@@ -69,38 +69,40 @@
                 <th>Price</th>
                 <th>Shipping Cost</th>
                 <th>Total</th>
-                <th>Status</th>
-                <th>Date Completed</th>
             </tr>
         </thead>
         <tbody>
-            {% for history in histories %}
+            {% for payment in payments %}
             <tr>
-                <td>{{ history.customer_id }}</td>
-                <td>{{ history.product_name }}</td>
+                <td>{{ payment.order_id }}</td>
+                <td>{{ payment.status }}</td>
                 <td>
-                    {% if history.product_picture %}
-                        <img src="{{ history.product_picture }}" alt="{{ history.product_name }}">
+                    {% if payment.payment_file_path %}
+                        <img src="{{ payment.payment_file_path }}" alt="{{ payment.payment_file_path }}" style="max-width: 100px; max-height: 100px;">
                     {% else %}
-                        <span class="no-data">No Image</span>
+                        No File
                     {% endif %}
                 </td>
-                <td>{{ history.category }}</td>
-                <td>{{ history.gender if history.gender else 'N/A' }}</td>
-                <td>{{ history.size if history.size else 'N/A' }}</td>
-                <td>{{ history.color if history.color else 'N/A' }}</td>
-                <td>{{ history.quantity }}</td>
-                <td>{{ "{:,.0f}".format(history.price) }}</td>
-                <td>{{ "{:,.0f}".format(history.shipping_cost) }}</td>
-                <td>{{ "{:,.0f}".format(history.grand_total) }}</td>
-                <td><b>{{history.status }}</b></td>
-                <td>{{ history.date_completed.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ payment.product_name }}</td>
+                <td>
+                    {% if payment.product_picture %}
+                        <img src="{{ payment.product_picture }}" alt="{{ payment.product_name }}" style="max-width: 100px; max-height: 100px;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ payment.product_category }}</td>
+                <td>{{ payment.gender }}</td>
+                <td>{{ payment.size }}</td>
+                <td>{{ payment.color }}</td>
+                <td>{{ payment.quantity }}</td>
+                <td>{{ "{:,.0f}".format(payment.price) }}</td>
+                <td>{{ "{:,.0f}".format(payment.shipping_cost) }}</td>
+                <td>{{ "{:,.0f}".format(payment.total) }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</div>
-
 
 <!-- Footer -->
 <footer class="footer">
@@ -109,7 +111,7 @@
     </div>
 </footer>
 
-<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+<script src="{{ url_for('static', filename='js/payment_status.js') }}"></script>
 
 </body>
 </html>

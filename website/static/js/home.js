@@ -1,7 +1,7 @@
 // Tunggu sampai halaman sepenuhnya dimuat
 window.onload = function() {
     // Ambil semua elemen dengan kelas 'alert' yang bukan 'banner-info'
-    const flashMessages = document.querySelectorAll('.alert:not(.banner-info)');
+    const flashMessages = document.querySelectorAll('.alert-home');
     
     // Loop untuk mengatur waktu hilangnya pesan flash
     flashMessages.forEach((message) => {

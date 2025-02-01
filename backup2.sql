@@ -2,6 +2,7 @@
 CREATE TABLE `order` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     `product_name` varchar(100) NOT NULL,
+    `product_picture` varchar(1000) NOT NULL,
     category VARCHAR(20) NOT NULL,
     gender ENUM('men', 'women', 'child') NOT NULL,
     size ENUM('S', 'M', 'L', 'XL', 'XXL') NOT NULL,
@@ -97,6 +98,7 @@ CREATE TABLE `payment` (
 CREATE TABLE `order_user` (
   `id` int(11) NOT NULL,
   `product_name` varchar(100) NOT NULL,
+  `product_picture` varchar(1000) NOT NULL,
   `category` varchar(20) NOT NULL,
   `gender` enum('men','women','child') NOT NULL,
   `size` enum('S','M','L','XL','XXL') NOT NULL,
@@ -120,10 +122,10 @@ CREATE TABLE `order_user` (
 
 CREATE TABLE `history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_user_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_name` varchar(100) NOT NULL,
+  `product_picture` varchar(1000) NOT NULL,
   `category` varchar(50) NOT NULL,
   `gender` varchar(10) DEFAULT NULL,
   `size` varchar(10) DEFAULT NULL,
@@ -137,8 +139,29 @@ CREATE TABLE `history` (
   PRIMARY KEY (`id`),
   KEY `history_fk1` (`customer_id`),
   KEY `history_fk2` (`product_id`),
-  KEY `history_fk3` (`order_user_id`),
   CONSTRAINT `history_fk1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `history_fk2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `history_fk3` FOREIGN KEY (`order_user_id`) REFERENCES `order_user` (`id`) ON DELETE CASCADE
+  CONSTRAINT `history_fk2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- fasion.payment_status definition
+
+CREATE TABLE `payment_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `payment_file_path` varchar(255) DEFAULT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `product_picture` varchar(1000) NOT NULL,
+  `product_category` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `size` varchar(10) NOT NULL,
+  `color` varchar(50) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `shipping_cost` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `payment_status_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;

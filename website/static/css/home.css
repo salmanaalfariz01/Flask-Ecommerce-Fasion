@@ -163,7 +163,7 @@ body {
 
 
 /* Flash Message */
-.alert {
+.alert-home {
     padding: 10px;
     background-color: #ffc107;
     color: #000;

@@ -81,6 +81,7 @@ class Cart(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(100), nullable=False)
+    product_picture = db.Column(db.String(1000), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     gender = db.Column(db.Enum('men', 'women', 'child', name='gender_enum'), nullable=False)
     size = db.Column(db.Enum('S', 'M', 'L', 'XL', 'XXL', name='size_enum'), nullable=False)
@@ -104,6 +105,7 @@ class Order(db.Model):
 class OrderUser(db.Model):
     id = db.Column(db.Integer, db.ForeignKey('order.id'), primary_key=True, nullable=False)
     product_name = db.Column(db.String(100), nullable=False)
+    product_picture = db.Column(db.String(1000), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     gender = db.Column(db.Enum('men', 'women', 'child', name='gender_enum'), nullable=False)
     size = db.Column(db.Enum('S', 'M', 'L', 'XL', 'XXL', name='size_enum'), nullable=False)
@@ -121,7 +123,7 @@ class OrderUser(db.Model):
 
 
     def __str__(self):
-        return f'<Order {self.id}>'
+        return f'<OrderUser {self.id}>'
 
 
 class Payment(db.Model):
@@ -134,14 +136,13 @@ class Payment(db.Model):
 
     def __str__(self):
         return f'<Order {self.id}>'
-    
 
 class History(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    order_user_id = db.Column(db.Integer, db.ForeignKey('order_user.id'), nullable=False)  # ID Order asli
     customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     product_name = db.Column(db.String(100), nullable=False)  # Nama produk
+    product_picture = db.Column(db.String(1000), nullable=False)
     category = db.Column(db.String(50), nullable=False)  # Kategori produk
     gender = db.Column(db.String(10), nullable=True)  # Gender produk
     size = db.Column(db.String(10), nullable=True)  # Ukuran
@@ -153,9 +154,36 @@ class History(db.Model):
     status = db.Column(db.String(50), nullable=False)  # Status pesanan
     date_completed = db.Column(db.DateTime(timezone=True), default=datetime.now)
 
-    # Relasi
-    customer = db.relationship('Customer', backref='histories')
-    product = db.relationship('Product', backref='histories')
+    # Foreign key relationships
+    customer = db.relationship('Customer', backref=db.backref('history', lazy=True))
+    product = db.relationship('Product', backref=db.backref('history', lazy=True))
+
+    def __str__(self):
+        return f'<History {self.id}>'
+
+
+
+class PaymentStatus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    status = db.Column(db.String(50), nullable=False)
+    payment_file_path = db.Column(db.String(255), nullable=True)  # Path to payment file
+    # Product-related fields
+    product_name = db.Column(db.String(100), nullable=False)
+    product_picture = db.Column(db.String(1000), nullable=False)
+    product_category = db.Column(db.String(50), nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
+    size = db.Column(db.String(10), nullable=False)
+    color = db.Column(db.String(50), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    shipping_cost = db.Column(db.Integer, nullable=False)
+    total = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f"<PaymentStatus {self.id}>"
+
+
 
 
 
