@@ -1,40 +1,92 @@
-{% extends 'forms.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syzea Store - Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+</head>
+<body>
 
-{% block title %} Sign Up {% endblock %}
-
-{% block body %}
-
-<!-- Sign Up section start -->
-
-<section class="base" id="base-signup">
-    <div class="base-content">
-        <div class="form">
-            <h3>
-                Create an account <br> to shop
-            </h3>
-            
-            <hr class="first">
-            <form method="POST">
-                {{ form.hidden_tag() }}
-
-                <div class="email"><h4>Email Address</h4>{{ form.email }} <hr> </div>
-                <div class="name"><h4>User Name</h4>{{ form.username }} <hr></div>
-                <div class="phone"><h4>Phone</h4>{{ form.phone }} <hr></div>
-                <div class="password"><h4>Password</h4>{{ form.password1 }} <hr></div>
-                <div class="password"><h4>Confirm Passowrd</h4>{{ form.password2 }} <hr></div>
-                <div class="address"><h4>Address</h4>{{ form.address }} <hr></div>
-
-
-                <div class="buttons">
-                    <a href="/login"> Login</a>
-                    {{ form.submit() }}
-                </div>
-
-
-            </form>
+    {% if get_flashed_messages(with_categories=true) %}
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
         </div>
+    {% endfor %}
+{% endif %}
+
+    <div class="register-container">
+        <h1>Register Syzea Store</h1>
+        <section class="base" id="base-signup">
+            <div class="base-content">
+                <div class="form">
+                    
+                    <hr class="first">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+        
+                        <div class="email">
+                            {{ form.email(class="form-control", placeholder="Email Address", required=True) }} 
+                             
+                        </div>
+                        
+                        <div class="name">
+                            {{ form.username(class="form-control", placeholder="Username", required=True) }} 
+                            
+                        </div>
+                        
+                        <div class="phone">
+                            {{ form.phone(class="form-control", placeholder="Phone Number", pattern="[0-9]+", title="Only numbers are allowed", required=True) }} 
+                            
+                        </div>
+                        
+                        <div class="password">
+                            <div class="input-container">
+                                {{ form.password1(class="form-control", id="password", placeholder="Password", required=True) }}
+                                <label class="show-password-checkbox">
+                                    <input type="checkbox" onclick="togglePassword()"> Show Password
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="password">
+                            <div class="input-container">
+                                {{ form.password2(class="form-control", id="confirm-password", placeholder="Confirm Password", required=True) }}
+                                <label class="show-password-checkbox">
+                                    <input type="checkbox" onclick="toggleConfirmPassword()"> Show Password
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="address">
+                            {{ form.address(class="form-control address-field", placeholder="Enter your address", required=True) }} 
+                            
+                        </div>
+        
+                        <div class="buttons">
+                            <a href="/login" class="btn btn-secondary">Login</a>  <!-- Login Button -->
+                            {{ form.submit(class="btn btn-primary") }}  <!-- Sign Up Button -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        {% if request.args.get('error') %}
+            <p class="error">{{ request.args.get('error') }}</p>
+        {% endif %}
     </div>
-</section>
+</body>
 
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
 
-{% endblock %}
+    function toggleConfirmPassword() {
+        const confirmPasswordField = document.getElementById("confirm-password");
+        confirmPasswordField.type = confirmPasswordField.type === "password" ? "text" : "password";
+    }
+</script>
+</html>

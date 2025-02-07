@@ -3,6 +3,9 @@ from .forms import LoginForm, SignUpForm, PasswordChangeForm
 from .models import Customer
 from . import db
 from flask_login import login_user, login_required, logout_user
+from werkzeug.security import generate_password_hash
+
+
 
 
 auth = Blueprint('auth', __name__)
@@ -24,48 +27,49 @@ def sign_up():
             new_customer.email = email
             new_customer.phone = phone
             new_customer.username = username
-            new_customer.password = password2
+            new_customer.password_hash = generate_password_hash(password2)  # Hash password
             new_customer.address = address
 
             try:
                 db.session.add(new_customer)
                 db.session.commit()
-                flash('Account Created Successfully, You can now Login')
+                flash('Account created successfully! You can now log in.', 'success')  # Success message
                 return redirect('/login')
             except Exception as e:
                 print(e)
-                flash('Account Not Created!!, Email already exists')
-
-            form.email.data = ''
-            form.username.data = ''
-            form.phone.data = ''
-            form.password1.data = ''
-            form.password2.data = ''
-            form.address.data = ''
+                flash('Account creation failed! The email might already exist.', 'error')  # Error message
+        else:
+            flash('Passwords do not match. Please try again.', 'error')
 
     return render_template('signup.html', form=form)
+
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        email = form.email.data
+        login_input = form.email.data  # Menggunakan input login (email, phone, username)
         password = form.password.data
 
-        customer = Customer.query.filter_by(email=email).first()
+        # Mencari customer berdasarkan email, phone, atau username
+        customer = Customer.query.filter(
+            (Customer.email == login_input) | 
+            (Customer.phone == login_input) | 
+            (Customer.username == login_input)
+        ).first()
 
         if customer:
             if customer.verify_password(password=password):
                 login_user(customer)
                 return redirect('/')
             else:
-                flash('Incorrect Email or Password')
-
+                flash('Incorrect Email/Phone/Username or Password', 'error')
         else:
-            flash('Account does not exist please Sign Up')
+            flash('Account does not exist, please Sign Up', 'error')
 
     return render_template('login.html', form=form)
+
 
 
 @auth.route('/logout', methods=['GET', 'POST'])

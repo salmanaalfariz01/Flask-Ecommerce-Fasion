@@ -1,14 +1,15 @@
 from flask import Blueprint, render_template, flash, redirect, request, jsonify, url_for, send_file
 from flask_login import login_required, current_user
-from .models import Product, Cart, Order, PaymentStatus, History, OrderUser
+from .models import Product, Cart, Order, PaymentStatus, History, OrderUser, get_jakarta_time
 from . import db
-from datetime import datetime
+from datetime import datetime, timedelta
 from pytz import timezone
 from werkzeug.utils import secure_filename
 import os
 import io
 import cv2
 import random
+import string
 import numpy as np
 from sqlalchemy import text
 
@@ -24,9 +25,6 @@ if not os.path.exists(UPLOAD_FOLDER):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def get_jakarta_time():
-    jakarta_timezone = timezone('Asia/Jakarta')
-    return datetime.now(jakarta_timezone)
 
 views = Blueprint('views', __name__)
 
@@ -396,8 +394,6 @@ def order():
 
 
 
-
-
 @views.route('/upload-payment/<int:order_id>', methods=['POST'])
 @login_required
 def upload_payment(order_id):
@@ -416,7 +412,12 @@ def upload_payment(order_id):
         # Pastikan file yang diunggah valid
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            
+            # Menambahkan 10 angka acak ke nama file
+            random_suffix = ''.join(random.choices(string.digits, k=10))
+            filename_with_suffix = f"{filename.split('.')[0]}_{random_suffix}.{filename.split('.')[-1]}"
+            
+            file_path = os.path.join(UPLOAD_FOLDER, filename_with_suffix)
             file.save(file_path)
             
             # Update status pesanan menjadi "Paid" di tabel Order
@@ -467,6 +468,7 @@ def upload_payment(order_id):
     
     flash('Order not found or unauthorized access.')
     return redirect(url_for('views.order'))
+
 
 
 @views.route('/payment-status')
@@ -672,7 +674,6 @@ def download_invoice(order_id):
         return redirect('/orders')
 
 
-
 @views.route('/order-arrived/<int:id>', methods=['POST'])
 @login_required
 def order_arrived(id):
@@ -744,6 +745,9 @@ def order_arrived(id):
         print(f"❌ ERROR: {e}")
         flash("An error occurred. Please try again.", "error")
         return redirect(url_for('views.order'))
+
+
+
 
 
 

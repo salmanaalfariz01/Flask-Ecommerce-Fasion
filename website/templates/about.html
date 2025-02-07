@@ -21,14 +21,16 @@
 
         <!-- Navbar Icons (Positioned to the right) -->
         <div class="navbar-icons">
+            <a href="/payment-status" class="icon-link">
+                <i class="fas fa-credit-card"></i>  <!-- Menambahkan ikon kartu kredit untuk status pembayaran -->
+            </a>
             <a href="/cart" class="icon-link">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="badge">{{ cart | length if cart else 0 }}</span>
+                <span class="badge">{{ cart | length }}</span>
             </a>
             <a href="/history" class="icon-link">
                 <i class="fas fa-history"></i>
-            </a>
-
+            </a>            
             <!-- Dropdown for Account -->
             <div class="dropdown">
                 <button class="dropdown-toggle" onclick="toggleDropdown()">
@@ -41,11 +43,17 @@
                 </button>
                 <ul class="dropdown-menu">
                     {% if current_user.is_authenticated %}
-                    <li><a href="/profile/{{ current_user.id }}">Profile</a></li>
-                    <li><a href="/orders">Orders</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                        <li><a href="/profile/{{ current_user.id }}">Profile</a></li>
+                        <li><a href="/orders">Orders</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                        
+                        {% if current_user.id == 1 %}  {# Only admin can see this #}
+                        <li><a href="/product">List Product</a></li>
+                        <li><a href="/add-shop-items">Add Product</a></li>
+                        {% endif %}
+
                     {% else %}
-                    <li><a href="/login">Login</a></li>
+                        <li><a href="/login">Login</a></li>
                     {% endif %}
                 </ul>
             </div>

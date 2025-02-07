@@ -1,0 +1,179 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Register Container */
+.register-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+hr.first {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+/* Form Fields */
+div {
+    margin-bottom: 10px;
+}
+
+
+/* Input Fields */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #007BFF;
+    background-color: #fff;
+}
+
+/* Checkbox */
+.show-password-checkbox {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Password Container */
+.input-container {
+    position: relative;
+}
+
+/* Show Password Checkbox inside a Box */
+.show-password-checkbox {
+    position: absolute;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.show-password-checkbox input {
+    margin-right: 5px;
+}
+
+/* Address Input (Textarea Style) */
+.address-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    min-height: 120px; /* Make the input taller to accommodate multi-line input */
+    resize: vertical; /* Allows the user to resize vertically */
+    white-space: pre-wrap; /* Ensures text wraps to the next line when it reaches the right edge */
+    overflow-wrap: break-word; /* Ensures long words break and wrap within the input */
+    vertical-align: top; /* Ensures text starts from the top */
+    line-height: 1.5; /* Adjust line height for better readability */
+}
+
+.address-field:focus {
+    outline: none;
+    border-color: #007BFF;
+    background-color: #fff;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+a, .btn-primary {
+    padding: 10px 15px;
+    background-color: #000; /* Black background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    width: 48%; /* Reduced width to allow side-by-side buttons */
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+a:hover, .btn-primary:hover {
+    background-color: #333; /* Darker shade of black when hovered */
+}
+
+/* Error Message */
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Link */
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* CSS untuk alert */
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+}
+
+.alert.success {
+    background-color: #28a745; /* Green for success */
+}
+
+.alert.error {
+    background-color: #dc3545; /* Red for error */
+}

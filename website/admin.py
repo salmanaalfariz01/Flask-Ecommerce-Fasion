@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, send_from_directory, redirect, request
+from flask import Blueprint, render_template, flash, send_from_directory, redirect, url_for,request
 from flask_login import login_required, current_user
 from .forms import ShopItemsForm, OrderForm, UpdateItemsForm
 from werkzeug.utils import secure_filename
@@ -31,49 +31,59 @@ def add_shop_items():
             in_stock = form.in_stock.data
             flash_sale = form.flash_sale.data
 
+            # Check if the product already exists
+            existing_product = Product.query.filter_by(
+                product_name=product_name, size=size, color=color
+            ).first()
+
+            if existing_product:
+                flash(f'Product: {product_name}, Size: {size}, Color: {color} already exists!', 'warning')
+                return redirect(url_for('admin.add_shop_items'))
+
+            # Save product image
             file = form.product_picture.data
-
             file_name = secure_filename(file.filename)
-
             file_path = f'./media/{file_name}'
-
             file.save(file_path)
 
-            new_shop_item = Product()
-            new_shop_item.product_name = product_name
-            new_shop_item.current_price = current_price
-            new_shop_item.previous_price = previous_price
-            new_shop_item.size = size
-            new_shop_item.category = category
-            new_shop_item.gender = gender
-            new_shop_item.color = color
-            new_shop_item.in_stock = in_stock
-            new_shop_item.flash_sale = flash_sale
-
-            new_shop_item.product_picture = file_path
+            # Create new product entry
+            new_shop_item = Product(
+                product_name=product_name,
+                current_price=current_price,
+                previous_price=previous_price,
+                size=size,
+                category=category,
+                gender=gender,
+                color=color,
+                in_stock=in_stock,
+                flash_sale=flash_sale,
+                product_picture=file_path,
+            )
 
             try:
                 db.session.add(new_shop_item)
                 db.session.commit()
-                flash(f'{product_name} Size: {size} Color: {color} added Successfully')
+                flash(f'Product: {product_name}, Size: {size}, Color: {color} added successfully!', 'success')
                 print('Product Added')
-                return render_template('add_shop_items.html', form=form)
+                return redirect(url_for('admin.add_shop_items'))
             except Exception as e:
                 print(e)
-                flash('Product Not Added!!')
+                flash('Failed to add product!', 'danger')
 
         return render_template('add_shop_items.html', form=form)
 
     return render_template('404.html')
 
 
-@admin.route('/shop-items', methods=['GET', 'POST'])
+
+@admin.route('/product', methods=['GET', 'POST'])
 @login_required
 def shop_items():
     if current_user.id == 1:
         items = Product.query.order_by(Product.date_added).all()
-        return render_template('shop_items.html', items=items)
+        return render_template('product.html', items=items)
     return render_template('404.html')
+
 
 
 
@@ -136,23 +146,25 @@ def update_item(item_id):
     return render_template('404.html')
 
 
-
-@admin.route('/delete-item/<int:item_id>', methods=['GET', 'POST'])
+@admin.route('/delete-item/<int:item_id>', methods=['POST', 'GET'])
 @login_required
-def delete_item(item_id):
+def delete_product(item_id):
     if current_user.id == 1:
+        item = Product.query.get_or_404(item_id)
+
         try:
-            item_to_delete = Product.query.get(item_id)
-            db.session.delete(item_to_delete)
+            db.session.delete(item)
             db.session.commit()
-            flash('One Item deleted')
-            return redirect('/shop-items')
+            flash("Product deleted successfully!", "success")
         except Exception as e:
-            print('Item not deleted', e)
-            flash('Item not deleted!!')
-        return redirect('/shop-items')
+            flash("Error deleting product!", "danger")
+            print(e)
+
+        return redirect(url_for("admin.shop_items"))
 
     return render_template('404.html')
+
+
 
 
 @admin.route('/view-orders')

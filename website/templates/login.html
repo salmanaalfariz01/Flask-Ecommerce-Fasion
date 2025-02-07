@@ -1,35 +1,45 @@
-{% extends 'forms.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syzea Store - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Syzea Store</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
 
-{% block title %} Login {% endblock %}
+            <!-- Input Email/Username -->
+            <input type="text" name="email" placeholder="Email/phone/username" required>
 
-{% block body %}
+            <!-- Password Field with Show Password Option -->
+            <div class="input-container">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                <label class="show-password-checkbox">
+                    <input type="checkbox" onclick="togglePassword()"> Show Password
+                </label>
+            </div>
 
-<!-- Login section start -->
+            <!-- Login Button -->
+            <button type="submit">Login</button>
 
-<section class="base" id="base-signup">
-    <div class="base-content">
-        <div class="form">
-            <h3>
-                Login to start <br> Shopping
-            </h3>
-            
-            <hr class="first">
-            <form method="POST">
-                {{ form.hidden_tag() }}
+            <!-- Flash Message for Errors -->
+            {% if request.args.get('error') %}
+                <p class="error">{{ request.args.get('error') }}</p>
+            {% endif %}
+        </form>
 
-                <div class="email"><h4>Email Address</h4>{{ form.email }} <hr></div>
-                <div class="password"><h4>Password</h4>{{ form.password }} <hr></div>
-
-                <div class="buttons">
-                    <a href="/sign-up"> Sign Up</a>
-                    {{ form.submit() }}
-                </div>
-
-
-            </form>
-        </div>
+        <p>Not Registered? <a href="/sign-up"> Click Here</a></p>
     </div>
-</section>
+</body>
 
-
-{% endblock %}
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
+</script>    
+</html>

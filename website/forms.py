@@ -1,16 +1,18 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, IntegerField, PasswordField, EmailField, BooleanField, SubmitField, SelectField
+from wtforms import StringField, IntegerField, IntegerField, PasswordField, EmailField, BooleanField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, length, NumberRange
-from flask_wtf.file import FileField, FileRequired
+from flask_wtf.file import FileField
+from wtforms.validators import DataRequired, Length
+
 
 
 class SignUpForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired()])
-    username = StringField('Username', validators=[DataRequired(), length(min=4)])
-    phone = StringField('Phone', validators=[DataRequired(), length(min=10)])
-    password1 = PasswordField('Enter Your Password', validators=[DataRequired(), length(min=6)])
-    password2 = PasswordField('Confirm Your Password', validators=[DataRequired(), length(min=6)])
-    address = StringField('Address', validators=[DataRequired(), length(min=4)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=4)])
+    phone = StringField('Phone', validators=[DataRequired(), Length(min=10)])
+    password1 = PasswordField('Enter Your Password', validators=[DataRequired(), Length(min=6)])
+    password2 = PasswordField('Confirm Your Password', validators=[DataRequired(), Length(min=6)])
+    address = TextAreaField('Address', validators=[DataRequired(), length(min=4)])
     submit = SubmitField('Sign Up')
 
 
@@ -31,9 +33,24 @@ class ShopItemsForm(FlaskForm):
     product_name = StringField('Name of Product', validators=[DataRequired()])
     current_price = IntegerField('Current Price', validators=[DataRequired()])
     previous_price = IntegerField('Previous Price', validators=[DataRequired()])
-    size = StringField('Size', validators=[DataRequired()])
-    category = StringField('Category', validators=[DataRequired()])
-    gender = StringField('Gender', validators=[DataRequired()])
+    size = SelectField(
+        "Size",
+        choices=[("S", "S"), ("M", "M"), ("L", "L"), ("XL", "XL")],
+        default="S",
+        validators=[DataRequired()],
+    )
+    category = SelectField(
+        "Category",
+        choices=[("Shirt", "Shirt")],
+        default="Shirt",
+        validators=[DataRequired()],
+    )
+    gender = SelectField(
+        "Gender",
+        choices=[("Men", "Men"), ("Women", "Women"), ("Child", "Child")],
+        default="Men",
+        validators=[DataRequired()],
+    )
     color = StringField('Color', validators=[DataRequired()])
     in_stock = IntegerField('In Stock', validators=[DataRequired(), NumberRange(min=0)])
     product_picture = FileField('Product Picture', validators=[DataRequired()])

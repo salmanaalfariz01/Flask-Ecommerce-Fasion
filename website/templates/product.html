@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/payment_status.css') }}">
+    <title>Add Shop Item</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-
 
 <!-- Navbar -->
 <nav class="navbar">
@@ -62,55 +61,72 @@
     </div>
 </nav>
 
-<div class='history-title'>
-    <h1>Order History</h1>
+
+<div class="product-title">
+    <h1>List Product</h1>
 </div>
-<div>
-    <table>
-        <thead>
-            <tr>
-                <th>Customer ID</th>
-                <th>Product Name</th>
-                <th>Product Image</th>
-                <th>Category</th>
-                <th>Gender</th>
-                <th>Size</th>
-                <th>Color</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Shipping Cost</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Date Completed</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for history in histories %}
-            <tr>
-                <td>{{ history.customer_id }}</td>
-                <td>{{ history.product_name }}</td>
-                <td>
-                    {% if history.product_picture %}
-                        <img src="{{ history.product_picture }}" alt="{{ history.product_name }}">
-                    {% else %}
-                        <span class="no-data">No Image</span>
-                    {% endif %}
-                </td>
-                <td>{{ history.category }}</td>
-                <td>{{ history.gender if history.gender else 'N/A' }}</td>
-                <td>{{ history.size if history.size else 'N/A' }}</td>
-                <td>{{ history.color if history.color else 'N/A' }}</td>
-                <td>{{ history.quantity }}</td>
-                <td>{{ "{:,.0f}".format(history.price) }}</td>
-                <td>{{ "{:,.0f}".format(history.shipping_cost) }}</td>
-                <td>{{ "{:,.0f}".format(history.grand_total) }}</td>
-                <td><b>{{history.status }}</b></td>
-                <td>{{ history.date_completed.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert-danger alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Date Added</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Previous Price</th>
+            <th scope="col">Current Price</th>
+            <th scope="col">Size</th>
+            <th scope="col">Category</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Color</th>
+            <th scope="col">In Stock</th>
+            <th scope="col">Product Picture</th>
+            <th scope="col">Flash Sale</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in items %}
+
+        <tr>
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.date_added }}</td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.previous_price }}</td>
+            <td>{{ item.current_price }}</td>
+            <td>{{ item.size }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.gender }}</td>
+            <td>{{ item.color }}</td>
+            <td>{{ item.in_stock }}</td>
+            <td><img src="{{ item.product_picture }}" alt="" style="height: 50px; width: 50px; border-radius: 2px;"></td>
+            <td>{{ item.flash_sale }}</td>
+
+
+            <td>
+                <a href="/update-item/{{ item.id }}">Update</a>
+                <br>
+                <a href="javascript:void(0);" onclick="confirmDelete({{ item.id }})" class="delete-btn">Delete</a>
+            </td>
+
+        </tr>
+
+
+        {% endfor %}
+    </tbody>
+</table>
 
 
 <!-- Footer -->
@@ -119,8 +135,8 @@
         <p>&copy; 2025 Syzea. All rights reserved.</p>
     </div>
 </footer>
-
-<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url_for('static', filename='js/product.js') }}"></script>
 
 </body>
 </html>
