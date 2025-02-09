@@ -123,9 +123,13 @@ body {
 
 .history-title {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
 }
+
 
 table {
     width: 100%;
@@ -144,10 +148,12 @@ th, td {
 }
 
 th {
-    background-color: #007BFF;
-    color: white;
+    background-color: black !important;
+    color: white !important;
     font-weight: bold;
+    text-transform: uppercase;
 }
+
 
 td {
     background-color: #f9f9f9;

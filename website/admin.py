@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, flash, send_from_directory, redirect, url_for,request
+from flask import Blueprint,render_template, flash, send_from_directory, redirect, url_for,request
 from flask_login import login_required, current_user
-from .forms import ShopItemsForm, OrderForm, UpdateItemsForm
+from .forms import ShopItemsForm, UpdateItemsForm
 from werkzeug.utils import secure_filename
-from .models import Product, Order, Customer
+from .models import Product, Customer
 from . import db
 
 
@@ -85,22 +85,13 @@ def shop_items():
     return render_template('404.html')
 
 
-
-
 @admin.route('/update-item/<int:item_id>', methods=['GET', 'POST'])
 @login_required
 def update_item(item_id):
     if current_user.id == 1:
         form = UpdateItemsForm()
-
-        # Query produk berdasarkan ID
         item_to_update = Product.query.get_or_404(item_id)
 
-        # Log untuk debugging
-        print("Request Method:", request.method)
-        print("Form Data:", request.form)
-
-        # Saat request GET, isi nilai form dengan data dari database
         if request.method == 'GET':
             form.product_name.data = item_to_update.product_name
             form.previous_price.data = item_to_update.previous_price
@@ -112,11 +103,8 @@ def update_item(item_id):
             form.in_stock.data = item_to_update.in_stock
             form.flash_sale.data = item_to_update.flash_sale
 
-        # Jika form divalidasi (saat POST)
         if form.validate_on_submit():
-            print("Form Validated")
             try:
-                # Update data produk di database
                 item_to_update.product_name = form.product_name.data
                 item_to_update.previous_price = form.previous_price.data
                 item_to_update.current_price = form.current_price.data
@@ -128,22 +116,16 @@ def update_item(item_id):
                 item_to_update.flash_sale = form.flash_sale.data
 
                 db.session.commit()
-                flash(f'Product "{form.product_name.data}" updated successfully!', 'success')
-                return redirect('/shop-items')
+                flash(f'Stock :{form.in_stock.data}, Size:{form.size.data}, Color:{form.size.data} updated successfully!', 'success')
+                return redirect('/product')  # Pindah ke halaman /product
             except Exception as e:
                 db.session.rollback()
-                print("Error Updating Product:", e)
                 flash('Failed to update product.', 'danger')
 
-        # Jika form tidak valid (saat POST)
-        if request.method == 'POST' and not form.validate_on_submit():
-            print("Form Validation Failed")
-
-        # Render template dengan form dan data produk
         return render_template('update_item.html', form=form, item=item_to_update)
 
-    # Jika bukan admin, kembalikan 404
     return render_template('404.html')
+
 
 
 @admin.route('/delete-item/<int:item_id>', methods=['POST', 'GET'])
@@ -161,43 +143,6 @@ def delete_product(item_id):
             print(e)
 
         return redirect(url_for("admin.shop_items"))
-
-    return render_template('404.html')
-
-
-
-
-@admin.route('/view-orders')
-@login_required
-def order_view():
-    if current_user.id == 1:
-        orders = Order.query.all()
-        return render_template('view_orders.html', orders=orders)
-    return render_template('404.html')
-
-
-@admin.route('/update-order/<int:order_id>', methods=['GET', 'POST'])
-@login_required
-def update_order(order_id):
-    if current_user.id == 1:
-        form = OrderForm()
-
-        order = Order.query.get(order_id)
-
-        if form.validate_on_submit():
-            status = form.order_status.data
-            order.status = status
-
-            try:
-                db.session.commit()
-                flash(f'Order {order_id} Updated successfully')
-                return redirect('/view-orders')
-            except Exception as e:
-                print(e)
-                flash(f'Order {order_id} not updated')
-                return redirect('/view-orders')
-
-        return render_template('order_update.html', form=form)
 
     return render_template('404.html')
 

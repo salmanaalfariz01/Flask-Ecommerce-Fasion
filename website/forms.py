@@ -27,6 +27,12 @@ class PasswordChangeForm(FlaskForm):
     new_password = PasswordField('New Password', validators=[DataRequired(), length(min=6)])
     confirm_new_password = PasswordField('Confirm New Password', validators=[DataRequired(), length(min=6)])
     change_password = SubmitField('Change Password')
+    
+class UpdateProfileForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), ])
+    phone = StringField('Phone', validators=[DataRequired(), Length(min=10, max=15)])
+    address = StringField('Address', validators=[DataRequired()])
+    submit = SubmitField('Update Profile')
 
 
 class ShopItemsForm(FlaskForm):

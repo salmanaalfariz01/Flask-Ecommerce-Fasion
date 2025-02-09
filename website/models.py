@@ -179,6 +179,9 @@ class PaymentStatus(db.Model):
     price = db.Column(db.Integer, nullable=False)
     shipping_cost = db.Column(db.Integer, nullable=False)
     total = db.Column(db.Integer, nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+
 
     def __repr__(self):
         return f"<PaymentStatus {self.id}>"

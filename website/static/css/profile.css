@@ -120,100 +120,96 @@ body {
     color: #0056b3;
 }
 
-
-/* Product Title */
-.product-title {
+/* Pastikan wrapper utama berada di tengah */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70vh;
     text-align: center;
-    font-size: 14px;
+    width: 100%;
+}
+
+/* Pastikan .container-profile ikut di tengah */
+.container-profile {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Style untuk customer detail */
+.customer-detail {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+}
+
+/* Pastikan h1 di tengah */
+.my-profil-tittle {
+    text-align: center;
+}
+
+
+/* Wrapper untuk menyusun tombol secara sejajar */
+.button-container {
+    display: flex;
+    justify-content: center; /* Posisikan ke tengah */
+    gap: 10px; /* Beri jarak antar tombol */
+    margin-top: 20px; /* Beri jarak dari elemen atas */
+}
+
+/* Gaya tombol */
+.btn-update-profile,
+.btn-update-password {
+    display: inline-block;
+    padding: 10px 20px; /* Samakan padding */
+    text-align: center;
+    font-size: 1rem; /* Samakan ukuran font */
     font-weight: bold;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    border-radius: 5px; /* Tambahkan border-radius jika perlu */
+    transition: background-color 0.3s ease;
+    border: none; /* Hilangkan border jika ada */
+    cursor: pointer;
+}
+
+.btn-update-profile:hover,
+.btn-update-password:hover {
+    background-color: #003d80;
+}
+
+
+.alert-success {
+    background-color: #0056b3 !important;
+    color: white !important;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .alert-danger {
-    background-color: #dc3545;  /* Merah */
-    color: white;
-    font-size: 14px;
+    background-color: #b30000 !important;
+    color: white !important;
     padding: 10px;
     border-radius: 5px;
-    text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
-
-.alert-success {
-    background-color: #0056b3;
-    color: white;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Table Styling */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-.table thead {
-    background-color: black; /* Dark header */
-    color: white;
-}
-
-.table th, .table td {
-    padding: 12px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.table-hover tbody tr:hover {
-    background-color: #f8f9fa; /* Light gray hover */
-    color: black;
-}
-
-/* Image Styling */
-.table img {
-    height: 50px;
-    width: 50px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-/* Action Links */
-.table td a {
-    display: inline-block;
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    padding: 5px 8px;
-    border-radius: 4px;
-    transition: 0.3s ease-in-out;
-}
-
-.table td a:hover {
-    color: white;
-    background-color: #007bff;
-}
-
-/* Responsive Table */
-@media (max-width: 768px) {
-    .table th, .table td {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .table img {
-        height: 40px;
-        width: 40px;
-    }
-}
-
 
 /* Footer */
 .footer {
     background-color: black;
     color: white;
     text-align: center;
-    margin-top: auto;
     width: 100%;
+    margin-top: auto;
 }

@@ -120,93 +120,92 @@ body {
     color: #0056b3;
 }
 
-
-/* Product Title */
-.product-title {
+/* Container utama */
+.container-profile {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
 }
 
-.alert-danger {
-    background-color: #dc3545;  /* Merah */
-    color: white;
-    font-size: 14px;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    margin-bottom: 15px;
+/* Judul */
+.container-profile h2 {
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    color: #222;
 }
 
-.alert-success {
-    background-color: #0056b3;
-    color: white;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
+/* Style untuk label */
+.container-profile label {
+    display: block;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #333;
 }
 
-/* Table Styling */
-.table {
+/* Input field */
+.form-control {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-.table thead {
-    background-color: black; /* Dark header */
-    color: white;
-}
-
-.table th, .table td {
     padding: 12px;
-    text-align: center;
-    border: 1px solid #ddd;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    box-sizing: border-box;
+    margin-top: 5px;
+    transition: border 0.3s ease-in-out;
 }
 
-.table-hover tbody tr:hover {
-    background-color: #f8f9fa; /* Light gray hover */
-    color: black;
+.form-control:focus {
+    border-color: #004494;
 }
 
-/* Image Styling */
-.table img {
-    height: 50px;
-    width: 50px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-/* Action Links */
-.table td a {
-    display: inline-block;
-    text-decoration: none;
-    color: #007bff;
+/* Tombol utama */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
     font-weight: bold;
-    padding: 5px 8px;
-    border-radius: 4px;
-    transition: 0.3s ease-in-out;
-}
-
-.table td a:hover {
+    background-color: black;
     color: white;
-    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s ease;
 }
 
-/* Responsive Table */
-@media (max-width: 768px) {
-    .table th, .table td {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .table img {
-        height: 40px;
-        width: 40px;
-    }
+.btn-primary:hover {
+    background-color: #004494;
 }
+
+/* Tombol kembali */
+.btn-secondary {
+    width: 100%;
+    display: block;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #004494;
+}
+
 
 
 /* Footer */
@@ -214,6 +213,6 @@ body {
     background-color: black;
     color: white;
     text-align: center;
-    margin-top: auto;
     width: 100%;
+    margin-top: auto;
 }

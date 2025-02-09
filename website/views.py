@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, flash, redirect, request, jsonify, url_for, send_file
+from flask import Blueprint, abort, render_template, flash, redirect, request, jsonify, send_from_directory, url_for, send_file
 from flask_login import login_required, current_user
-from .models import Product, Cart, Order, PaymentStatus, History, OrderUser, get_jakarta_time
+
+from website.forms import PasswordChangeForm, UpdateProfileForm
+from .models import Customer, Product, Cart, Order, PaymentStatus, History, OrderUser
 from . import db
-from datetime import datetime, timedelta
-from pytz import timezone
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
+
 import os
 import io
 import cv2
@@ -73,7 +75,9 @@ def home():
         gender=gender_filter,
         size=size_filter
     )
-
+@views.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
 
 
 # Halaman About
@@ -440,6 +444,8 @@ def upload_payment(order_id):
             price = order.price
             shipping_cost = order.shipping_cost
             total = order.grand_total
+            customer_id = order.customer_id
+            product_id = order.product_id
 
             # Insert into payment_status table
             payment_status = PaymentStatus(
@@ -455,7 +461,9 @@ def upload_payment(order_id):
                 quantity=quantity,
                 price=price,
                 shipping_cost=shipping_cost,
-                total=total
+                total=total,
+                customer_id=customer_id,
+                product_id=product_id
             )
             db.session.add(payment_status)  # Add the new payment status to the session
             db.session.commit()  # Commit the transaction to the database
@@ -474,8 +482,11 @@ def upload_payment(order_id):
 @views.route('/payment-status')
 @login_required
 def payment_status():
-    # Retrieve all payment status records
-    payments = PaymentStatus.query.all()
+    # Admin melihat semua riwayat, user melihat riwayat mereka sendiri
+    if current_user.id == 1:  # Admin
+        payments = PaymentStatus.query.all()
+    else:
+        payments = PaymentStatus.query.filter_by(customer_id=current_user.id).all()
     
     # Ambil data keranjang (jika user login)
     cart = Cart.query.filter_by(customer_id=current_user.id).all() if current_user.is_authenticated else []
@@ -727,10 +738,13 @@ def order_arrived(id):
         if order:
             db.session.delete(order)
 
-        # Hapus data payment_status terkait order_user_id
+        # Update status PaymentStatus menjadi "The Order Has Arrived"
         payment_status = PaymentStatus.query.filter_by(order_id=order_user.id).first()
         if payment_status:
-            db.session.delete(payment_status)
+            payment_status.status = "The Order Has Arrived"
+            db.session.commit()  # Simpan perubahan
+            print(f"✅ PaymentStatus untuk order_id {order_user.id} diperbarui menjadi 'The Order Has Arrived'")
+
 
         # Hapus order_user setelah semua data telah disimpan ke history
         db.session.delete(order_user)
@@ -750,6 +764,95 @@ def order_arrived(id):
 
 
 
+@views.route('/update_profile/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def update_profile(user_id):
+    # Hanya pemilik akun atau admin yang bisa mengupdate
+    if current_user.id != user_id and current_user.id != 1:
+        abort(403)
+
+    user = Customer.query.get_or_404(user_id)
+    form = UpdateProfileForm()
+
+    if request.method == 'GET':
+        form.email.data = user.email
+        form.phone.data = user.phone
+        form.address.data = user.address
+
+    if form.validate_on_submit():
+        updates = []
+        
+        if user.email != form.email.data:
+            updates.append("Email")
+            user.email = form.email.data
+        
+        if user.phone != form.phone.data:
+            updates.append("Phone")
+            user.phone = form.phone.data
+        
+        if user.address != form.address.data:
+            updates.append("Address")
+            user.address = form.address.data
+
+        if updates:  # Hanya update jika ada perubahan
+            db.session.commit()
+            flash(f"{', '.join(updates)} berhasil diperbarui!", "success")
+        else:
+            flash("Tidak ada perubahan pada profil.", "info")
+
+        return redirect(url_for('views.profile', user_id=user.id))  # Redirect ke profile
+
+    cart = Cart.query.filter_by(customer_id=current_user.id).all() if current_user.is_authenticated else []
+
+    return render_template('update_profile.html', form=form, user=user, cart=cart)
+
+
+
+@views.route('/update_password/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def update_password(user_id):
+    if current_user.id != user_id and current_user.id != 1:
+        abort(403)
+
+    user = Customer.query.get_or_404(user_id)
+    form = PasswordChangeForm()
+
+    if form.validate_on_submit():
+        # Periksa apakah password lama benar
+        if not check_password_hash(user.password_hash, form.current_password.data):
+            flash("Current password is incorrect!", "danger")
+        elif form.new_password.data != form.confirm_new_password.data:
+            flash("New passwords do not match!", "danger")
+        else:
+            # Simpan password baru dalam bentuk hash
+            user.password_hash = generate_password_hash(form.new_password.data)
+            db.session.commit()
+            flash("Password updated successfully!", "success")
+            return redirect(url_for('views.profile', user_id=user.id))
+
+    return render_template('update_password.html', form=form, user=user)
+
+
+
+
+
+
+
+
+@views.route('/profile/<int:user_id>', methods=['GET'])
+@login_required
+def profile(user_id):  
+    # Cek apakah user ada di database
+    user = Customer.query.get_or_404(user_id)
+
+    # Hanya admin atau user itu sendiri yang bisa melihat profil
+    if current_user.id != user_id and current_user.id != 1:  
+        abort(403)  # Forbidden jika bukan pemilik akun atau admin
+
+    # Ambil data keranjang user
+    cart = Cart.query.filter_by(customer_id=user_id).all()
+
+    return render_template('profile.html', user=user, cart=cart)
 
 
 @views.route('/history')

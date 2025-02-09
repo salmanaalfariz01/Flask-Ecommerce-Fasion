@@ -78,3 +78,10 @@ button:hover {
 .input-container .show-password-checkbox input {
     margin-left: 5px;
 }
+
+
+/* Flash Message */
+.alert-login {
+    color: red;           /* White text */
+    text-align: center;     /* Center the text */
+}

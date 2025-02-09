@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syzea Store - Login</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/shirt.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
+
+    
+
     <div class="login-container">
         <h1>Syzea Store</h1>
         <form method="POST">
@@ -22,6 +26,13 @@
                     <input type="checkbox" onclick="togglePassword()"> Show Password
                 </label>
             </div>
+
+                        <!-- Flash Messages -->
+            {% for message in get_flashed_messages() %}
+            <div class="alert-login">
+                <strong>{{ message }}</strong>
+            </div>
+            {% endfor %}
 
             <!-- Login Button -->
             <button type="submit">Login</button>
@@ -41,5 +52,19 @@
         const passwordField = document.getElementById("password");
         passwordField.type = passwordField.type === "password" ? "text" : "password";
     }
+
+    // Tunggu sampai halaman sepenuhnya dimuat
+window.onload = function() {
+    // Ambil semua elemen dengan kelas 'alert' yang bukan 'banner-info'
+    const flashMessages = document.querySelectorAll('.alert-login');
+    
+    // Loop untuk mengatur waktu hilangnya pesan flash
+    flashMessages.forEach((message) => {
+        // Menyembunyikan pesan flash setelah 2 detik
+        setTimeout(() => {
+            message.style.display = 'none';
+        }, 2000); // 2000ms = 2 detik
+    });
+}
 </script>    
 </html>

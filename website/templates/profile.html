@@ -1,39 +1,110 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profil</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/shirt.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
 
-{% block title %} Home {% endblock %}
-
-
-{% block body %}
-
-<div class="container my-5">
-    <div class="row">
-        <h3 style="color: white;">Welcome <span class="text-capitalize">{{ customer.username }}</span></h3>
-
-        <div class="col-sm-2 border-end" style="margin-top: 20px;">
-        
-            <ul class="list-unstyled">
-                <li class="d-grid"><a href="#" class="btn btn-primary">Profile</a></li>
-                <li class="d-grid"><a href="/change-password/{{ customer.id }}" class="btn btn-primary" style="margin-top: 5px;">Change Password</a></li>
-
-            </ul>
-        
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <!-- Brand Logo/Name -->
+        <div class="navbar-left">
+            <a class="navbar-brand" href="/">Syzea</a>
+            <!-- Navbar Menu (Positioned to the left) -->
+            <a class="navbar-brand" href="/about">About</a>
         </div>
 
-        <div class="col-sm-5 offset-sm-1" style="background-color: white; border-radius: 18px; margin-top: 20px;">
-            <div class="row">
+        <!-- Navbar Icons (Positioned to the right) -->
+        <div class="navbar-icons">
+            <a href="/payment-status" class="icon-link">
+                <i class="fas fa-credit-card"></i>  <!-- Menambahkan ikon kartu kredit untuk status pembayaran -->
+            </a>
+            <a href="/cart" class="icon-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge">{{ cart | length }}</span>
+            </a>
+            <a href="/history" class="icon-link">
+                <i class="fas fa-history"></i>
+            </a>            
+            <!-- Dropdown for Account -->
+            <div class="dropdown">
+                <button class="dropdown-toggle" onclick="toggleDropdown()">
+                    <i class="fas fa-user-circle"></i> <!-- Icon for Account -->
+                    {% if current_user.is_authenticated %}
+                    <span>{{ current_user.username }}</span> <!-- Display the logged-in user's name -->
+                    {% else %}
+                    <span>Account</span>
+                    {% endif %}
+                </button>
+                <ul class="dropdown-menu">
+                    {% if current_user.is_authenticated %}
+                        <li><a href="/profile/{{ current_user.id }}">Profile</a></li>
+                        <li><a href="/orders">Orders</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                        
+                        {% if current_user.id == 1 %}  {# Only admin can see this #}
+                        <li><a href="/product">List Product</a></li>
+                        <li><a href="/add-shop-items">Add Product</a></li>
+                        {% endif %}
 
-                <div class="col-sm-8">
-                    <div class="card m-2">
-
-                        <h3>{{ customer.username }}</h3>
-                        <p>Email: {{ customer.email }}</p>
-                    </div>
-                </div>
-
+                    {% else %}
+                        <li><a href="/login">Login</a></li>
+                    {% endif %}
+                </ul>
             </div>
-        
+        </div>
+    </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="main-content">
+    <div class="my-profil-tittle">
+        <h1>My Profil</h1>
+    </div>
+
+    <div class="container-profile">
+        <div class="customer-detail">
+            <div class="row">
+                <h3>{{ user.username }}</h3>
+                <p>Email: {{ user.email }}</p>
+                <p>Phone: {{ user.phone }}</p>
+                <p>Address: {{ user.address }}</p>
+            </div>
+
+            <!-- Wrapper untuk menyusun tombol secara sejajar -->
+            <div class="button-container">
+                <a href="{{ url_for('views.update_profile', user_id=user.id) }}" class="btn-update-profile">Update Profile</a>
+                <a href="{{ url_for('views.update_password', user_id=user.id) }}" class="btn-update-password">Update Password</a>
+            </div>
         </div>
     </div>
 </div>
 
-{% endblock %}
+
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <p>&copy; 2025 Syzea. All rights reserved.</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+
+</body>
+</html>
